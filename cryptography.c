@@ -72,7 +72,7 @@ int main() {
     rewind(input_file_stream);
 
     char* buffer;
-    buffer = (char*) malloc(sizeof(char) * file_size);
+    buffer = (char*) malloc(file_size);
     if (buffer == NULL) 
         return 0;
     
