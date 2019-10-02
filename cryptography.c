@@ -79,8 +79,8 @@ int main() {
     char* result1 = mask_block_length(key, buffer, file_size);
     char* result2 = mask_block_length(key, result1, file_size);
 
-    fwrite(result1, sizeof(char), file_size, output_file_stream);
-    fwrite(result2, sizeof(char), file_size, output_file_stream2);
+    fwrite(result1, 1, file_size, output_file_stream);
+    fwrite(result2, 1, file_size, output_file_stream2);
 
     printf("String: %s\nString: %s\nString: %s\n", buffer, result1, result2);
     
