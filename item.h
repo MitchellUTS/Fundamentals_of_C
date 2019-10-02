@@ -11,8 +11,12 @@
 *******************************************************************************/
 
 struct item {
-    int member1;
-    char member2;
+    int ID;                   /*Must be unique*/
+    long ISBN;
+    char title[256];
+    char author[256];
+    char type[256];
+    char category[256];
 };
 typedef struct item item_t;
 
