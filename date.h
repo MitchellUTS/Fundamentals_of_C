@@ -12,6 +12,7 @@
 
 #include "date.c"
 
+/*#ifdef*/
 struct date {
     int year, month, day;
 };
@@ -20,3 +21,5 @@ typedef struct date date_t;
 void print_date(date_t date);
 void create_date(date_t* date);
 int validate_date(date_t* date);
+
+
