@@ -16,7 +16,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define SHOW(T,V) do { T x = V; print_bits(#T, #V, (unsigned char*) &x, sizeof(x)); } while(0)
 
 void print_byte_as_bits(char val) {
     for (int i = 7; 0 <= i; i--) {
@@ -24,7 +23,7 @@ void print_byte_as_bits(char val) {
     }
 }
 
-void print_bits(char * ty, char * val, unsigned char * bytes, size_t num_bytes) {
+void print_bits(char * ty, char * val, unsigned char * bytes, int num_bytes) {
     printf("(%s) %s = [ ", ty, val);
 
     for (size_t i = 0; i < num_bytes; i++) {
@@ -36,22 +35,71 @@ void print_bits(char * ty, char * val, unsigned char * bytes, size_t num_bytes) 
 
 int main() {
 
-    char text[256];// = "wow this is encrypted!";
-    char key[256];//  = "password";
-    printf("Enter the text>");
+    //char text[256];// = "wow this is encrypted!";
+    char key[256]  = "password";
+    //printf("Enter the text>");
     
-    //scanf("%255s", text);
-    scanf("%[^\n]", text);
-    fflush(stdin);
+    /*
+    scanf("%255s", text);
+    //scanf("%[^\n]", text);
+    //fflush(stdin);
     printf("Enter the key/password>");
-    fflush(stdin);
-    scanf("%[^\n]", key);
+    //fflush(stdin);
+    //scanf("%[^\n]", key);
+    scanf("%255s", key);
+    */
+
+   FILE* input_file_stream;
+
+    /* Open data file the file for reading data */ 
+    input_file_stream = fopen("input.txt", "rb");
+
+    FILE* output_file_stream;
+
+    /* Open data file the file for writing data */ 
+    output_file_stream = fopen("output.txt", "wb");
+
+    FILE* output_file_stream2;
+
+    /* Open data file the file for writing data */ 
+    output_file_stream2 = fopen("output2.txt", "wb");
+
+    if (input_file_stream == NULL || output_file_stream == NULL || output_file_stream2 == NULL)
+        return 0;
+
+    fseek(input_file_stream, 0, SEEK_END);
+    long file_size = ftell(input_file_stream);
+    rewind(input_file_stream);
+
+    char* buffer;
+    buffer = (char*) malloc(sizeof(char) * file_size);
+    if (buffer == NULL) 
+        return 0;
+    
+    char* result1 = mask_block_length(key, buffer, file_size);
+    char* result2 = mask_block_length(key, result1, file_size);
+
+    fwrite(result1, sizeof(char), file_size, output_file_stream);
+    fwrite(result2, sizeof(char), file_size, output_file_stream2);
+
+    printf("String: %s\nString: %s\nString: %s\n", buffer, result1, result2);
+    
+    free(result1);
+    free(result2);
+    free(buffer);
+
+    fclose(input_file_stream);
+    fclose(output_file_stream);
+
+    /*
+    
     char* result = mask_block_length(key, text, strlen(text));
     puts(result);
     char* result2 = mask_block_length(key, result, strlen(text));
     puts(result2);
     printf("text:\t%d\nresult\t%d\nresult2\t%d\n",
         strlen(text), strlen(result), strlen(result2));
+    */
     //test_byte_stream(text);
     //test_encryption();
     
@@ -110,6 +158,7 @@ char* mask_block(char* key, char* data) {
 }
 
 char* mask_block_length(char* key, char* data, int length) {
+    //length--;
     byte_node_t* current = (byte_node_t*) malloc(sizeof(byte_node_t));
     create_circular_byte_stream_length(current, key, length);
     char* result = (char*) malloc(sizeof(char) * length);
