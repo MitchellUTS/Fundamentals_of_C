@@ -21,3 +21,4 @@
 #define true  1
 
 int between(int value, int min, int max);
+void loginFunction();
