@@ -8,7 +8,7 @@
  * Purpose: To provide all required crypographic functions
  * 
 *******************************************************************************/
-//#include "core.h"
+/*#include "core.h"*/
 
 #include "cryptography.h"
 
@@ -18,15 +18,17 @@
 
 
 void print_byte_as_bits(char val) {
-    for (int i = 7; 0 <= i; i--) {
+    int i;
+    for (i  = 7; 0 <= i; i--) {
         printf("%c", (val & (1 << i)) ? '1' : '0');
     }
 }
 
 void print_bits(char * ty, char * val, unsigned char * bytes, int num_bytes) {
     printf("(%s) %s = [ ", ty, val);
-
-    for (size_t i = 0; i < num_bytes; i++) {
+    
+    int i;
+    for (i = 0; i < num_bytes; i++) {
         print_byte_as_bits(bytes[i]);
         printf(" ");
     }
@@ -35,9 +37,9 @@ void print_bits(char * ty, char * val, unsigned char * bytes, int num_bytes) {
 
 int main() {
 
-    //char text[256];// = "wow this is encrypted!";
+    /*char text[256];// = "wow this is encrypted!";*/
     char key[256]  = "password";
-    //printf("Enter the text>");
+    /*printf("Enter the text>");*/
     
     /*
     scanf("%255s", text);
@@ -76,6 +78,8 @@ int main() {
     if (buffer == NULL) 
         return 0;
     
+    fread(buffer, 1, file_size, input_file_stream);
+
     char* result1 = mask_block_length(key, buffer, file_size);
     char* result2 = mask_block_length(key, result1, file_size);
 
@@ -99,9 +103,10 @@ int main() {
     puts(result2);
     printf("text:\t%d\nresult\t%d\nresult2\t%d\n",
         strlen(text), strlen(result), strlen(result2));
-    */
+    
     //test_byte_stream(text);
     //test_encryption();
+    */
     
     return 0;
 }
@@ -158,7 +163,6 @@ char* mask_block(char* key, char* data) {
 }
 
 char* mask_block_length(char* key, char* data, int length) {
-    //length--;
     byte_node_t* current = (byte_node_t*) malloc(sizeof(byte_node_t));
     create_circular_byte_stream_length(current, key, length);
     char* result = (char*) malloc(sizeof(char) * length);
@@ -166,7 +170,7 @@ char* mask_block_length(char* key, char* data, int length) {
     int i;
     for (i = 0; i < length; i++) {
         if (mask_byte(current->byte, data[i], result + i) == '\0') {
-            //printf("\nRIP\n");
+            /*printf("\nRIP\n");*/
         }
     }
     return result;
@@ -186,13 +190,13 @@ void create_circular_byte_stream_length(byte_node_t* head, char* data, int size)
         int i;
         byte_list(head, data[0]);
         for(i = 1; i < size; i++) {
-            //current->byte = data[i];
-            //current->next = (byte_node_t*) malloc(sizeof(byte_node_t));
-            //current = current->next;
+            /*current->byte = data[i];
+            current->next = (byte_node_t*) malloc(sizeof(byte_node_t));
+            current = current->next;*/
             current = byte_node_add(current, data[i]);
         }
-        //current->byte = data[i];
-        //current->next = head;
+        /*current->byte = data[i];
+        current->next = head;*/
     } else {
         printf("Error a circular byte stream could not be create because there was %d bytes of data\n", size);
     }
