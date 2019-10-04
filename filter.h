@@ -8,7 +8,6 @@
  * Purpose: To provide functions related to search within the item structure
  * 
 *******************************************************************************/
-#include <filter.c>
 
 void display_sel_items (int items_size);
 
