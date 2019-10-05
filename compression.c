@@ -52,6 +52,19 @@ int main() {
     }
     printf("The average time was %f seconds.\nOver %d successful executions.\n", sum/count, (int) count);
 
+    ubig_t frequencies[256];
+    init_frequencies(frequencies);
+    char* string = "testing";
+    count_frequencies(string, strlen(string), frequencies);
+    string = "another";
+    count_frequencies(string, strlen(string), frequencies);
+
+    for (i = 0; i < 256; i++) {
+        if (frequencies[i] != 0) {
+            printf("%c: %ld\n", i, frequencies[i]);
+        }
+    }
+
     /*print_bits("block_t", "block", (unsigned char*) block, block_size);*/
     /*print_bits("block_t", "block", (unsigned char*) block, block_display_size);*/
 
@@ -124,4 +137,21 @@ my_uint_t code_to_binary(char* string, my_uint_t size) {
             sum += power;
     }
     return sum;
+}
+
+huffman_node_t huffman_node_create(char* code) {
+    huffman_node_t new_huffman_node;
+    memset(&new_huffman_node, 0, sizeof(huffman_node_t));
+    return new_huffman_node;
+}
+
+void init_frequencies(ubig_t* frequencies) {
+    memset(frequencies, 0, 256 * sizeof(ubig_t));
+}
+
+void count_frequencies(char* string, ubig_t strlen, ubig_t* frequencies) {
+    int i;
+    for (i = 0; i < strlen; i++) {
+        frequencies[(unsigned int) string[i]]++;
+    } 
 }

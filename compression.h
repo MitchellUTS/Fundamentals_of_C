@@ -15,6 +15,7 @@
 #include <math.h>
 
 typedef unsigned int my_uint_t;
+typedef unsigned long long ubig_t;
 
 struct huffman_code {
     my_uint_t length;
@@ -22,13 +23,25 @@ struct huffman_code {
 };
 typedef struct huffman_code huffman_code_t;
 
+struct huffman_node {
+    struct huffman_node* left;
+    struct huffman_node* right;
+    huffman_code_t code;
+    ubig_t frequency;
+};
+typedef struct huffman_node huffman_node_t;
+
+void count_frequencies(char* string, ubig_t strlen, ubig_t* frequencies);
+void init_frequencies(ubig_t* frequencies);
+
 huffman_code_t huffman_code_create(char* code);
+huffman_node_t huffman_node_create(char* code);
 my_uint_t code_to_binary(char* string, my_uint_t size);
 
 void testByteShift();
 
 void print_byte_as_bits(char val) {
-    int i = 0;
+    int i;
     for (i = 7; 0 <= i; i--) {
         printf("%c", (val & (1 << i)) ? '1' : '0');
     }
