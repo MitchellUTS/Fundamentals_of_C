@@ -22,7 +22,7 @@
 void save_items(item_node_t* item_list) {
 	FILE* file_stream;
 
-    char format_string[] = "%-6s %-3s %02d-%02d %02d:%02d %-3s %02d-%02d %02d:%02d\n";
+    char format_string[] = "%003d %l %s %s %s %s\n";
 
     /* Open/Create the file for writing text data */ 
     file_stream = fopen(DB_NAME, "w");
@@ -36,12 +36,8 @@ void save_items(item_node_t* item_list) {
 
         /* Print each item to the database in the same format that is used
         in the display function. */
-    	fprintf(file_stream, format_string, items[i].itemcode, "SYD", 
-    		items[i].departure_dt.month, items[i].departure_dt.day, 
-            items[i].departure_dt.hour, items[i].departure_dt.minute,
-    		items[i].arrival_city,
-    		items[i].arrival_dt.month, items[i].arrival_dt.day, 
-            items[i].arrival_dt.hour, items[i].arrival_dt.minute);
+    	fprintf(file_stream, format_string, item.ID, item.ISBN,
+    	        item.title, item.author, item.type, item.category);
     }
     
     /* Always close the file after you have finished using it. */ 
@@ -61,11 +57,7 @@ void save_items(item_node_t* item_list) {
 *******************************************************************************/
 void load_items(item_node_t* item_list) {
 	FILE* file_stream;
-    char format_string[] = "%6s %3s %02d-%02d %02d:%02d %3s %02d-%02d %02d:%02d\n";
-
-    /* This is used the hold the "SYD" text from the file which is not used in
-        memory*/
-    char temp[MAX_CITYCODE_LEN + 1];
+    char format_string[] = "%003d %l %s %s %s %s\n";
 
     /* Open the file for reading text data */
     file_stream = fopen(DB_NAME, "r");
@@ -80,18 +72,16 @@ void load_items(item_node_t* item_list) {
 
     /* Keep reading records from the file until an invalid line is read
         or memory has been filled*/
-    while (fscanf(file_stream, format_string, items[i].itemcode, temp, 
-    		&items[i].departure_dt.month, &items[i].departure_dt.day, 
-            &items[i].departure_dt.hour, &items[i].departure_dt.minute,
-    		items[i].arrival_city,
-    		&items[i].arrival_dt.month, &items[i].arrival_dt.day, 
-            &items[i].arrival_dt.hour, &items[i].arrival_dt.minute) == 11 &&
+    
+    while (fscanf(file_stream, format_string, &item_list[i].ID, 
+    		&item_list[i].ISBN, item_list[i].title, item_list[i].author, 
+			item_list[i].type, item_list[i].category) == 6 &&
             i < MAX_NUM_itemS) {
-            i++;
+            i++; /*TO DELETE COMMENT: what is MAX_NUM_itemS value?*/
     }
 
     /* Update the number of items currently in use as part of the array */
-    *items_size = i;    
+    *items_size = i; /*TO DELETE COMMENT: where are we saving that value?*/   
     
     /* Always close the file once you are no longer using it */
     fclose(file_stream);

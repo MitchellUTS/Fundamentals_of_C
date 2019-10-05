@@ -20,12 +20,8 @@
 *******************************************************************************/
 void print_item(item_t item)
 {
-    char format_string[] = "%-6s %-3s %02d-%02d %02d:%02d %-3s %02d-%02d %02d:%02d\n";
+    char format_string[] = "%003d %l %s %s %s %s\n";
 
-    printf(format_string, item.itemcode, "SYD",
-        item.departure_dt.month, item.departure_dt.day,
-        item.departure_dt.hour, item.departure_dt.minute,
-        item.arrival_city, item.arrival_dt.month,
-        item.arrival_dt.day, item.arrival_dt.hour,
-        item.arrival_dt.minute);
+    printf(format_string, item.ID, item.ISBN,
+        item.title, item.author, item.type, item.category);
 }
