@@ -96,3 +96,48 @@ void load_items(item_node_t* item_list) {
     /* Always close the file once you are no longer using it */
     fclose(file_stream);
 }
+
+
+
+
+void getNoOfRecords()
+{
+  int recordcount=0;
+  for (i=0; i<sizeof(struct Book),i++)
+  {
+    recordcount++;
+  }
+  return recordcount;
+}
+
+
+
+void deleteRecord()
+{
+  int BookID;
+  int count=0;
+  
+  FILE *ptr2 = fopen("c:\\database1.h","a");
+  int records = getNoOfRecords();
+  refresh();
+  fflush(stdin);
+  printf("Enter BookID:\n");
+  scanf("%d",&BookID);
+  while(count!=records)
+  {
+    fread(&var,sizeof(struct Book),1,ptr);
+    if(var.BookID==BookID)
+    {
+    }
+    else
+    {
+      fwrite(&var,sizeof(struct Book),1,ptr2);
+    }
+    count++;
+  }
+  fcloseall();
+  remove("c:\\database.h");
+  rename("c:\\database1.h","c:\\database.h");
+  printf("Press any key to continue..");
+  getch();
+}
