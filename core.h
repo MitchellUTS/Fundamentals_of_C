@@ -9,10 +9,17 @@
  * 
 *******************************************************************************/
 
-#include "main.h"
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <math.h>
+
 #include "util.h"
+#include "date.h"
+#include "item.h"
+
 #include "database.h"
 #include "cryptography.h"
 #include "compression.h"
-#include "date.h"
-#include "item.h"
+
+#include "main.h"

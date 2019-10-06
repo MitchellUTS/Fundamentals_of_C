@@ -30,8 +30,3 @@ void create_circular_byte_stream(byte_node_t* head, char* data);
 void test_encryption(void);
 void test_byte_stream(char* text);
 
-void print_byte_as_bits(char val);
-
-void print_bits(char * ty, char * val, unsigned char * bytes, int num_bytes);
-
-#define SHOW(T,V) do { T x = V; print_bits(#T, #V, (unsigned char*) &x, sizeof(x)); } while(0)

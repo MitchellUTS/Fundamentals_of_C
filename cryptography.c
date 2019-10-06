@@ -8,32 +8,7 @@
  * Purpose: To provide all required crypographic functions
  * 
 *******************************************************************************/
-/*#include "core.h"*/
-
-#include "cryptography.h"
-
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-
-
-void print_byte_as_bits(char val) {
-    int i;
-    for (i  = 7; 0 <= i; i--) {
-        printf("%c", (val & (1 << i)) ? '1' : '0');
-    }
-}
-
-void print_bits(char * ty, char * val, unsigned char * bytes, int num_bytes) {
-    printf("(%s) %s = [ ", ty, val);
-    
-    int i;
-    for (i = 0; i < num_bytes; i++) {
-        print_byte_as_bits(bytes[i]);
-        printf(" ");
-    }
-    printf("]\n");
-}
+#include "core.h"
 
 int main() {
 

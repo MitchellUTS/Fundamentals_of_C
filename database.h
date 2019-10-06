@@ -9,5 +9,12 @@
  * 
 *******************************************************************************/
 
+struct item_node {
+    struct item_node* next;
+    item_t item;
+};
+typedef struct item_node item_node_t;
+
+
 void save_database(item_node_t* item_list);
 void load_database(item_node_t* item_list);
