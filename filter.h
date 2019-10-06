@@ -10,4 +10,5 @@
 *******************************************************************************/
 
 void display_sel_items (int items_size);
+void print_filter_menu (void);
 
