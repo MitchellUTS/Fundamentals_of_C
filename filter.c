@@ -12,11 +12,68 @@
 #include "core.h"
 
 /*******************************************************************************
+ * This function displays filtered entries of the database, by first asking
+ * for the filter type, then calling a function 'display_sel_items'
+ * to search through database entries and print them.
+ * inputs:
+ * - item_t* items: An array of size MAX_NUM_items containing all item entries
+ * - int items_size: The number of items currently in the array item_t* items
+ * outputs:
+ * - None  
+*******************************************************************************/
+void select_filter (int items_size)
+{
+  int filter_selection;  /* Choice of filter user has selected */
+
+  /* Continue the program until user types '7' to exit */
+  do
+    {
+      /* Request a selection from user from filter selection menu */
+      print_filter_menu();
+      scanf("%d", &filter_selection);
+
+      /* Force user to re-input selection until valid */
+      while (filter_selection < 1 || filter_selection > 7)
+	{
+	  printf("Invalid choice\n");
+	  printf_filter_menu();
+	  scanf("%d", &filter_selection);
+	}
+
+      /* Select which item to filter through, based on user input */
+      switch(filter_selection)
+	{
+	case 1:
+
+	  break;
+	case 2:
+
+	  break;
+	case 3:
+
+	  break;
+	case 4:
+
+	  break;
+	case 5:
+
+	  break;
+	case 6:
+
+	  break;
+	}
+
+      
+    } while (filter_selection != 7);
+  return;
+}
+/*******************************************************************************
  * This function displays filtered entries of the database.
  * If input is '*', it will call a function to display all item entries.
  * inputs:
  * - item_t* items: An array of size MAX_NUM_items containing all item entries
  * - int items_size: The number of items currently in the array item_t* items
+ * - 
  * outputs:
  * - None  
 *******************************************************************************/
@@ -24,7 +81,7 @@ void display_sel_items (int items_size)
 {
   /* Input search term or asterisk (*) */
   char search_input[MAX_ITEM_NAME_LEN + 1];
-
+  
   printf("Enter search term>\n");
   scanf("%s", search_input);
 
@@ -67,4 +124,25 @@ void display_sel_items (int items_size)
   }
 
   return;
+}
+
+/*******************************************************************************
+ * This function prints the filter selection menu with multiple filter options
+ * available for selection, or to cancel filter selection.
+ * inputs:
+ * - none
+ * outputs:
+ * - none
+*******************************************************************************/
+void print_filter_menu (void)
+{
+    printf("\n"
+    "1. ID\n"
+    "2. ISBN\n"
+    "3. Book Title\n"
+    "4. Author\n"
+    "5. Book Type\n"
+    "6. Book Category\n"
+    "7. Cancel filter selection\n"
+    "Enter your choice of filter selection (Number between 1-7)>\n");
 }
