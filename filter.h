@@ -9,6 +9,8 @@
  * 
 *******************************************************************************/
 
-void display_sel_items (int items_size);
+void select_filter (int items_size);
 void print_filter_menu (void);
-
+void filter_int_items (int items_size);
+void filter_long_items (int items_size);
+void filter_char_items (int items_size)
