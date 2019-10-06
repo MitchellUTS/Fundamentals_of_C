@@ -38,7 +38,7 @@ int main(void)
         /* Select the function to call based on the user input */
         switch(user_selection) {
             case 1: 
-                add_item(&item_list);
+                add_item(&item_list); /*I'm assuming create_item() from item.h?*/
                 break;
         }
 
