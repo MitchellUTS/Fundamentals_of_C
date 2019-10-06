@@ -103,9 +103,17 @@ void load_items(item_node_t* item_list) {
 void getNoOfRecords()
 {
   int recordcount=0;
-  for (i=0; i<sizeof(struct Book),i++)
+  for (i=0; i<sizeof(struct item),i++)
   {
-    recordcount++;
+    if (item[i]== NULL)
+    {
+      return;
+
+    }
+    else{
+      recordcount++;
+    }
+    
   }
   return recordcount;
 }
@@ -114,7 +122,7 @@ void getNoOfRecords()
 
 void deleteRecord()
 {
-  int BookID;
+  int ID;
   int count=0;
   
   FILE *ptr2 = fopen("c:\\database1.h","a");
@@ -122,16 +130,16 @@ void deleteRecord()
   refresh();
   fflush(stdin);
   printf("Enter BookID:\n");
-  scanf("%d",&BookID);
+  scanf("%d",&ID);
   while(count!=records)
   {
-    fread(&var,sizeof(struct Book),1,ptr);
-    if(var.BookID==BookID)
+    fread(&var,sizeof(struct item),1,ptr);
+    if(var.ID==ID)
     {
     }
     else
     {
-      fwrite(&var,sizeof(struct Book),1,ptr2);
+      fwrite(&var,sizeof(struct item),1,ptr2);
     }
     count++;
   }
