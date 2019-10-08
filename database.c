@@ -86,6 +86,56 @@ void load_database (item_node_t* item_list) {
     fclose(file_stream);
 }
 
+void getNoOfRecords()
+{
+  int recordcount=0;
+  for (i=0; i<sizeof(struct item),i++)
+  {
+    if (item[i]== NULL)
+    {
+      return;
+
+    }
+    else{
+      recordcount++;
+    }
+    
+  }
+  return recordcount;
+}
+
+
+
+void deleteRecord()
+{
+  int ID;
+  int count=0;
+  
+  FILE *ptr2 = fopen("c:\\database1.h","a");
+  int records = getNoOfRecords();
+  refresh();
+  fflush(stdin);
+  printf("Enter BookID:\n");
+  scanf("%d",&ID);
+  while(count!=records)
+  {
+    fread(&var,sizeof(struct item),1,ptr);
+    if(var.ID==ID)
+    {
+    }
+    else
+    {
+      fwrite(&var,sizeof(struct item),1,ptr2);
+    }
+    count++;
+  }
+  fcloseall();
+  remove("c:\\database.h");
+  rename("c:\\database1.h","c:\\database.h");
+  printf("Press any key to continue..");
+  getch();
+}
+
 /*******************************************************************************
  * This function sorts the linked lists based on desired variable.
  * inputs:

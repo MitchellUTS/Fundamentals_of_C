@@ -49,7 +49,7 @@ void loginFunction()
   
   char username[20];
   char userpwd[10]; 
-  int i;
+  int i=0;
   
   printf("Enter your username for the IMS : ");
 
