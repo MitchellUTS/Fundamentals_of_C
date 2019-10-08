@@ -19,7 +19,7 @@
  * outputs:
  * - none
 *******************************************************************************/
-void save_items(item_node_t* item_list) {
+void save_database (item_node_t* item_list) {
 	FILE* file_stream;
 
     char format_string[] = "%003d %l %s %s %s %s\n";
@@ -49,15 +49,12 @@ void save_items(item_node_t* item_list) {
 /*******************************************************************************
  * This function loads all items from the database file to memory.
  * inputs:
- * - item_t* items: This is an array of size MAX_NUM_itemS which will be
- *                      populated with records from the database. 
- * - int* items_size: This is the number of items currently in the array,
- *                      this value will be updated when the database contents
- *                      have been loaded.
+ * - item_node_t* item_list: This is a pointer directing to the linked list of 
+ * 							 all items in the database
  * outputs:
  * - none
 *******************************************************************************/
-void load_items(item_node_t* item_list) {
+void load_database (item_node_t* item_list) {
 	FILE* file_stream;
     char format_string[] = "%003d %l %s %s %s %s\n";
 
@@ -90,41 +87,10 @@ void load_items(item_node_t* item_list) {
 }
 
 /*******************************************************************************
- * This function selects which variable to sort database.
+ * This function sorts the linked lists based on desired variable.
  * inputs:
- * - item_node_t* item_list: This is a pointer that directs to a linked 
- * - int* items_size: This is the number of items currently in the array,
- *                      this value will be updated when the database contents
- *                      have been loaded.
- * outputs:
- * - none
-*******************************************************************************/
-int sort_option(void) {
-	
-	int user_selection;
-	
-	/* Request a selection from the user */
-	print_sorting_option();
-	scanf("%d", &user_selection);
-	        
-	/* Allow to user to re-input their selection until it is valid */
-	while (user_selection < 1 || user_selection > 5) {
-		printf("Invalid choice\n");
-		print_sorting_option();
-		scanf("%d", &user_selection);
-	}	
-	
-	return user_selection;
-}
-
-/*******************************************************************************
- * This function loads all items from the database file to memory.
- * inputs:
- * - item_t* items: This is an array of size MAX_NUM_itemS which will be
- *                      populated with records from the database. 
- * - int* items_size: This is the number of items currently in the array,
- *                      this value will be updated when the database contents
- *                      have been loaded.
+ * - item_node_t** start: This is the pointer to the address of the head node 
+ * 						  for the linked list containing the data of items.
  * outputs:
  * - none
 *******************************************************************************/
@@ -147,9 +113,17 @@ void merge_sort(struct item_node_t** start)
     merge_sort(&b); 
   
     /* answer = merge the two sorted lists together */
-    *headRef = sort_items(a, b); 
+    *head = sort_items(a, b); 
 } 
   
+/*******************************************************************************
+ * This function sorts the linked lists based on desired variable.
+ * inputs:
+ * - item_node_t** start: This is the pointer to the address of the head node 
+ * 						  for the linked list containing the data of items.
+ * outputs:
+ * - item_node_t*: returns the pointer
+*******************************************************************************/
 struct item_node_t* sort_items(struct item_node_t* a, struct item_node_t* b) {
 	
     struct item_node_t* result = NULL; 
@@ -171,7 +145,18 @@ struct item_node_t* sort_items(struct item_node_t* a, struct item_node_t* b) {
     return result; 
 } 
   
-/* Split the nodes of the list into two evenly sized lists. */
+/*******************************************************************************
+ * This function splits the nodes of the list into two evenly sized lists.
+ * inputs:
+ * - item_node_t* head: This is the pointer to the head of the full sized
+ * 						linked list.
+ * - item_node_t** front: This is the pointer to the address of the first half 
+ * 						  of nodes of the split list
+ * - item_node_t** back: This is the pointer to the address of the second half 
+ * 						 of nodes of the split list
+ * outputs:
+ * - none
+*******************************************************************************/
 void split_lists(struct item_node_t* head, 
                  struct item_node_t** front, struct item_node_t** back) 
 { 
@@ -206,22 +191,3 @@ void add_item(struct item_node_t** head_ref)
   
     (*head_ref) = new_node; 
 } */
-
-/*******************************************************************************
- * This function prints the initial menu with all instructions on how to use
- * this program.
- * inputs:
- * - none
- * outputs:
- * - none
-*******************************************************************************/
-void print_sorting_menu (void)
-{
-    printf("\n"
-    "1. Sort by ID\n"
-	"2. Sort by Title\n"
-	"3. Sort by Author\n"
-    "4. Sort by Type\n"
-	"5. Sort by Genre\n"
-    "Enter your choice (number between 1-5)>\n");
-}
