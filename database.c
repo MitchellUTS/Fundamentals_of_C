@@ -101,6 +101,31 @@ void load_database (item_node_t* item_list) {
     fclose(file_stream);
 }
 
+/*******************************************************************************
+ * This function saves all items in memory to the database file as plain text.
+ * inputs:
+ * - item_t* items: This is an array of size MAX_NUM_itemS which will be
+ *                      saved to the database. 
+ * - int items_size: This is the number of items currently in the array.
+ * outputs:
+ * - none
+*******************************************************************************/
+void add_record (FILE* file_ptr, item_node_t* node, int id, long isbn, 
+				 char title[], char author[], char type[], char chategory[]) {
+
+	char format_string[] = "%003d %l %s %s %s %s\n";
+    	
+	id = ((item_t*) (node->item_data))->ID;
+	isbn = ((item_t*) (node->item_data))->ISBN;
+	strcpy(((item_t*) (node->item_data))->title, title);
+	strcpy(((item_t*) (node->item_data))->author, author);
+	strcpy(((item_t*) (node->item_data))->type, type);
+	strcpy(((item_t*) (node->item_data))->category, category);
+	
+	fprintf(file_ptr, format_string, 
+			&id, &isbn, title, author, type, category);
+}
+
 void getNoOfRecords()
 {
   int recordcount=0;
