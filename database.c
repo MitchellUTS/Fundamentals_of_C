@@ -126,19 +126,21 @@ void add_record (FILE* file_ptr, item_node_t* node, int id, long isbn,
 			&id, &isbn, title, author, type, category);
 }
 
-void getNoOfRecords()
+int getNoOfRecords()
 {
+    int i;
   int recordcount=0;
-  for (i=0; i<sizeof(struct item),i++)
+  for (i=0; i<sizeof(struct item);i++)
   {
-    if (item[i]== NULL)
-    {
+        if (item[i]== NULL)
+     {
       return;
 
-    }
-    else{
+     }
+        else
+     {
       recordcount++;
-    }
+     }
     
   }
   return recordcount;
@@ -149,6 +151,7 @@ void getNoOfRecords()
 void deleteRecord()
 {
   int ID;
+  int var;
   int count=0;
   
   FILE *ptr2 = fopen("c:\\database1.h","a");
@@ -159,13 +162,13 @@ void deleteRecord()
   scanf("%d",&ID);
   while(count!=records)
   {
-    fread(&var,sizeof(struct item),1,ptr);
+    fread(&var,sizeof(item_t),1,ptr);
     if(var.ID==ID)
     {
     }
     else
     {
-      fwrite(&var,sizeof(struct item),1,ptr2);
+      fwrite(&var,sizeof(item_t),1,ptr2);
     }
     count++;
   }

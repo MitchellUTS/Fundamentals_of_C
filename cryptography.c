@@ -10,10 +10,9 @@
 *******************************************************************************/
 #include "core.h"
 
-int main() {
+/*int main() {
 
-    /*char text[256];// = "wow this is encrypted!";*/
-    char key[256]  = "password";
+    char key[256]  = "password";*/
     /*printf("Enter the text>");*/
     
     /*
@@ -26,20 +25,20 @@ int main() {
     scanf("%255s", key);
     */
 
-   FILE* input_file_stream;
+   /*FILE* input_file_stream;*/
 
     /* Open data file the file for reading data */ 
-    input_file_stream = fopen("input.txt", "rb");
+    /*input_file_stream = fopen("input.txt", "rb");*/
 
-    FILE* output_file_stream;
-
-    /* Open data file the file for writing data */ 
-    output_file_stream = fopen("output.txt", "wb");
-
-    FILE* output_file_stream2;
+    /*FILE* output_file_stream;*/
 
     /* Open data file the file for writing data */ 
-    output_file_stream2 = fopen("output2.txt", "wb");
+    /*output_file_stream = fopen("output.txt", "wb");
+
+    FILE* output_file_stream2;*/
+
+    /* Open data file the file for writing data */ 
+    /*output_file_stream2 = fopen("output2.txt", "wb");
 
     if (input_file_stream == NULL || output_file_stream == NULL || output_file_stream2 == NULL)
         return 0;
@@ -70,7 +69,7 @@ int main() {
     fclose(input_file_stream);
     fclose(output_file_stream);
 
-    /*
+    *//*
     
     char* result = mask_block_length(key, text, strlen(text));
     puts(result);
@@ -83,7 +82,46 @@ int main() {
     //test_encryption();
     */
     
-    return 0;
+    /*return 0;
+}*/
+
+void mask_file(char* input_name, char* output_name, char* key) {
+    
+    FILE* input_file_stream;
+    /* Open data file the file for reading data */ 
+    input_file_stream = fopen(input_name, "rb");
+
+    FILE* output_file_stream;
+    /* Open data file the file for writing data */ 
+    output_file_stream = fopen(output_name, "wb");
+
+    if (input_file_stream == NULL || output_file_stream == NULL) {
+        printf("Fail to open files for encryption.\n");
+        return;
+    }
+
+    fseek(input_file_stream, 0, SEEK_END);
+    long file_size = ftell(input_file_stream);
+    rewind(input_file_stream);
+
+    char* buffer;
+    buffer = (char*) malloc(file_size);
+    if (buffer == NULL) {
+        printf("Fail to allocate memory for encryption.\n");
+        return;
+    }
+    
+    fread(buffer, 1, file_size, input_file_stream);
+
+    char* result1 = mask_block_length(key, buffer, file_size);
+
+    fwrite(result1, 1, file_size, output_file_stream);
+    
+    free(result1);
+    free(buffer);
+
+    fclose(input_file_stream);
+    fclose(output_file_stream);
 }
 
 void test_byte_stream(char* text) {
@@ -107,10 +145,10 @@ void test_encryption(void) {
     mask_byte(a, b, &c);
     mask_byte(a, c, &d);
 
-    SHOW(char, a);
+    /*SHOW(char, a);
     SHOW(char, b);
     SHOW(char, c);
-    SHOW(char, d);
+    SHOW(char, d);*/
 
     puts("");
     printf("Bytes:\n");
@@ -124,13 +162,13 @@ void test_encryption(void) {
         puts("The mask worked correctly.\n");
     }
 
-    int one = 174849;
+    /*int one = 174849;
     int two = 184894;
     int three = one ^ two;
 
     SHOW(int, one);
     SHOW(int, two);
-    SHOW(int, three);
+    SHOW(int, three);*/
 }
 
 char* mask_block(char* key, char* data) {
