@@ -21,26 +21,38 @@
 *******************************************************************************/
 void save_database (item_node_t* item_list) {
 	FILE* file_stream;
-
-    char format_string[] = "%003d %l %s %s %s %s\n";
+	char format_string[] = "%003d %l %s %s %s %s\n";
+	int id, count = 100, i = 0;
+	long isbn;
+	char title[256], author[256], type[256], category[256];
+	item_node_t* head = item_list;
 
     /* Open/Create the file for writing text data */ 
-    file_stream = fopen(DB_NAME, "w");
+    file_stream = fopen("input.txt", "w");
 
     /* Check if opening the file was successful */
     if (file_stream == NULL)
     	return;
     
-    /*TO DO: SORT ITEMS [merge_sort(item_list);] */
+    merge_sort(item_list);
 
-    int i;
-    for (i = 0; i < items_size; i++) {
-
-        /* Print each item to the database in the same format that is used
-        in the display function. */
-    	fprintf(file_stream, format_string, item.ID, item.ISBN,
-    	        item.title, item.author, item.type, item.category);
-    }
+    while (item_list->next != NULL) {
+    	
+    	/*Assumption: Rewrites whole file rather than append*/
+    	id = ((item_t*) (item_list->item_data))->ID;
+    	isbn = ((item_t*) (item_list->item_data))->ISBN;
+    	title = ((item_t*) (item_list->item_data))->title;
+    	author = ((item_t*) (item_list->item_data))->author;
+    	type = ((item_t*) (item_list->item_data))->type;
+    	category = ((item_t*) (item_list->item_data))->category;
+    	
+    	fprintf(file_stream, format_string, 
+    			&id, &isbn, title, author, type, category);
+    	
+    	item_list = item_list->next;
+	}
+    
+    item_list = head;
     
     /* Always close the file after you have finished using it. */ 
     fclose(file_stream);
@@ -57,30 +69,35 @@ void save_database (item_node_t* item_list) {
 void load_database (item_node_t* item_list) {
 	FILE* file_stream;
     char format_string[] = "%003d %l %s %s %s %s\n";
+    int id, count = 100, i = 0;
+    long isbn;
+    char title[256], author[256], type[256], category[256];
 
     /* Open the file for reading text data */
-    file_stream = fopen(DB_NAME, "r");
+    file_stream = fopen("output.txt", "r");
 
     /* Check if opening the file was successful */
     if (file_stream == NULL) {
         printf("Read error\n");
     	return;
     }
+    
+    /*for (c = getc(file_stream); c != EOF; c = getc(file_stream)) {
+		if (c == '\n') count++; 
+    }*/
 
-    int i = 0;
+    int 
 
     /* Keep reading records from the file until an invalid line is read
         or memory has been filled*/
     
-    while (fscanf(file_stream, format_string, &item_list[i].ID, 
-    		&item_list[i].ISBN, item_list[i].title, item_list[i].author, 
-			item_list[i].type, item_list[i].category) == 6 &&
-            i < MAX_NUM_itemS) {
-            i++; /*TO DELETE COMMENT: what is MAX_NUM_itemS value?*/
+    while (fscanf(file_stream, format_string, &id, 
+		&isbn, title, author, type, category) == 6 && i < count) {
+		i++; 
     }
 
     /* Update the number of items currently in use as part of the array */
-    *items_size = i; /*TO DELETE COMMENT: where are we saving that value?*/   
+    /* *items_size = i; TO DELETE COMMENT: where are we saving that value?*/   
     
     /* Always close the file once you are no longer using it */
     fclose(file_stream);
@@ -145,7 +162,7 @@ void deleteRecord()
  * - none
 *******************************************************************************/
 /* sorts the linked list by changing next pointers (not data) */
-void merge_sort(struct item_node_t** start) 
+void merge_sort(item_node_t** start) 
 { 
     item_node_t* head = *start; 
     item_node_t* a, b; 
@@ -174,7 +191,7 @@ void merge_sort(struct item_node_t** start)
  * outputs:
  * - item_node_t*: returns the pointer
 *******************************************************************************/
-struct item_node_t* sort_items(struct item_node_t* a, struct item_node_t* b) {
+struct item_node_t* sort_items(item_node_t* a, item_node_t* b) {
 	
     struct item_node_t* result = NULL; 
   
@@ -207,8 +224,7 @@ struct item_node_t* sort_items(struct item_node_t* a, struct item_node_t* b) {
  * outputs:
  * - none
 *******************************************************************************/
-void split_lists(struct item_node_t* head, 
-                 struct item_node_t** front, struct item_node_t** back) 
+void split_lists(item_node_t* head, item_node_t** front, item_node_t** back) 
 { 
     struct item_node_t* first_list, second_list; 
     first_list = head; 

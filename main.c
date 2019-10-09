@@ -53,7 +53,7 @@ int main(void)
                 break;
             case 4: 
 				int sort_num = sort_option();
-				/*merge_sort(&list);*/
+				/*merge_sort(&item_list);*/
 				break;
         }
 
