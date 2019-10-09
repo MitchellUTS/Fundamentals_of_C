@@ -74,3 +74,12 @@ void print_bits(char * ty, char * val, byte * bytes, size_t num_bytes) {
 }
 
 #define SHOW(T,V) do { T x = V; print_bits(#T, #V, (byte*) &x, sizeof(x)); } while(0)*/
+
+void compress_file(char* input_name, char* output_name);
+void decompress_file(char* input_name, char* output_name);
+
+
+void write_headers(FILE* out, ubig_t* frequencies);
+
+void decompress_data(FILE* in, FILE* out);
+void compress_data(FILE* out, char* code_array, byte* data, ubig_t length);
