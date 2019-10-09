@@ -10,10 +10,9 @@
 *******************************************************************************/
 #include "core.h"
 
-int main() {
+/*int main() {
 
-    /*char text[256];// = "wow this is encrypted!";*/
-    char key[256]  = "password";
+    char key[256]  = "password";*/
     /*printf("Enter the text>");*/
     
     /*
@@ -26,20 +25,20 @@ int main() {
     scanf("%255s", key);
     */
 
-   FILE* input_file_stream;
+   /*FILE* input_file_stream;*/
 
     /* Open data file the file for reading data */ 
-    input_file_stream = fopen("input.txt", "rb");
+    /*input_file_stream = fopen("input.txt", "rb");*/
 
-    FILE* output_file_stream;
-
-    /* Open data file the file for writing data */ 
-    output_file_stream = fopen("output.txt", "wb");
-
-    FILE* output_file_stream2;
+    /*FILE* output_file_stream;*/
 
     /* Open data file the file for writing data */ 
-    output_file_stream2 = fopen("output2.txt", "wb");
+    /*output_file_stream = fopen("output.txt", "wb");
+
+    FILE* output_file_stream2;*/
+
+    /* Open data file the file for writing data */ 
+    /*output_file_stream2 = fopen("output2.txt", "wb");
 
     if (input_file_stream == NULL || output_file_stream == NULL || output_file_stream2 == NULL)
         return 0;
@@ -70,7 +69,7 @@ int main() {
     fclose(input_file_stream);
     fclose(output_file_stream);
 
-    /*
+    *//*
     
     char* result = mask_block_length(key, text, strlen(text));
     puts(result);
@@ -83,8 +82,8 @@ int main() {
     //test_encryption();
     */
     
-    return 0;
-}
+    /*return 0;
+}*/
 
 void test_byte_stream(char* text) {
     byte_node_t head;
@@ -107,10 +106,10 @@ void test_encryption(void) {
     mask_byte(a, b, &c);
     mask_byte(a, c, &d);
 
-    SHOW(char, a);
+    /*SHOW(char, a);
     SHOW(char, b);
     SHOW(char, c);
-    SHOW(char, d);
+    SHOW(char, d);*/
 
     puts("");
     printf("Bytes:\n");
@@ -124,13 +123,13 @@ void test_encryption(void) {
         puts("The mask worked correctly.\n");
     }
 
-    int one = 174849;
+    /*int one = 174849;
     int two = 184894;
     int three = one ^ two;
 
     SHOW(int, one);
     SHOW(int, two);
-    SHOW(int, three);
+    SHOW(int, three);*/
 }
 
 char* mask_block(char* key, char* data) {

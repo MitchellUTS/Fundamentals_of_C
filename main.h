@@ -10,5 +10,5 @@
 *******************************************************************************/
 
 void print_main_menu();
-int sorting_option();
+int sort_option();
 void print_sorting_menu();

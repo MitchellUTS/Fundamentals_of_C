@@ -17,11 +17,13 @@
 *******************************************************************************/
 int main(void)
 {
-    int user_selection;
+    int user_selection, sort_num = -1;
 
-    item_node_t item_list;
+    printf("%d\n", sort_num);
+
+    /*item_node_t item_list;
     item_node_t* list = NULL;
-    list = (item_node_t*) malloc(sizeof(item_node_t));
+    list = (item_node_t*) malloc(sizeof(item_node_t)); Uncomment later*/
     
     /*NODE TEST
     ((item_t*)(item_list->item_data))->ID = 1;
@@ -49,10 +51,10 @@ int main(void)
         /* Select the function to call based on the user input */
         switch(user_selection) {
             case 1: 
-                add_item(&item_list); /*I'm assuming create_item() from item.h?*/
+                /*add_item(&item_list);*/ /*I'm assuming create_item() from item.h?*/
                 break;
             case 4: 
-				int sort_num = sort_option();
+			    sort_num = sort_option();
 				/*merge_sort(&item_list);*/
 				break;
         }

@@ -8,10 +8,8 @@
  * Purpose: To provide all required compression functions
  * 
 *******************************************************************************/
-/*#include "core.h"*/
-#include "compression.h"
-#include "limits.h"
-#include <time.h>
+#include "core.h"
+/*#include "compression.h"*/
 
 #define SetBit(block, byte, bit) ( block[byte] |= (1 << bit) )
 #define ClearBit(block, byte, bit) ( block[byte] &= ~(1 << bit) )
@@ -116,11 +114,11 @@ void compress_data(/*huffman_tree_node_t* root,*/ FILE* out, char* code_array, b
 
 }
 
-int main() {
+/*int main() {
 
     
-    /*char* string = "aaaaabbbbbbbbbccccccccccccdddddddddddddeeeeeeeeeeeeeeeefffffffffffffffffffffffffffffffffffffffffffff";*/
-    /*string = "Huffman coding is a data compression algorithm.";*/
+    *//*char* string = "aaaaabbbbbbbbbccccccccccccdddddddddddddeeeeeeeeeeeeeeeefffffffffffffffffffffffffffffffffffffffffffff";*/
+    /*string = "Huffman coding is a data compression algorithm.";*//*
 
     ubig_t frequencies[256];
     init_frequencies(frequencies);
@@ -144,12 +142,12 @@ int main() {
 
     count_frequencies(data, length, frequencies);
 
-    /*int i;
+    *//*int i;
     for (i = 0; i < 256; i++) {
         if (frequencies[i] != 0) {
             printf("%c: %ld\n", i, frequencies[i]);
         }
-    }*/
+    }*//*
 
     huffman_tree_node_t* root = build_huffman_tree(frequencies);
 
@@ -161,14 +159,14 @@ int main() {
     fclose(out);
     decompress_data(ind, outd);
 
-    /*print_bits("block_t", "block", (byte*) block, block_size);*/
-    /*print_bits("block_t", "block", (byte*) block, block_display_size);*/
+    *//*print_bits("block_t", "block", (byte*) block, block_size);*/
+    /*print_bits("block_t", "block", (byte*) block, block_display_size);*//*
 
     fclose(ind);
     fclose(outd);
 
     return 0;
-}
+}*/
 
 int testBitField(my_uint_t block_size) {
     byte* block = (byte*) calloc(block_size, 1);
@@ -180,7 +178,7 @@ int testBitField(my_uint_t block_size) {
         /*printf("Block allocation successful, %d bytes allocated.\n", block_size);*/
     }
 
-    time_t start_time = time(NULL);
+    /*time_t start_time = time(NULL);*/
 
     int byte, bit;
     for (byte = 0; byte < block_size; byte++) {
@@ -189,15 +187,15 @@ int testBitField(my_uint_t block_size) {
         }
     }
 
-    time_t end_time   = time(NULL);
+    /*time_t end_time   = time(NULL);*/
     
 
     free(block);
 
-    if (start_time != -1 && end_time != -1) {
+    /*if (start_time != -1 && end_time != -1) {
         printf("That operation took %ld seconds.\n", end_time - start_time);
         return (end_time - start_time);
-    }
+    }*/
     return 0;
 }
 
