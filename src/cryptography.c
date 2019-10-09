@@ -75,7 +75,7 @@ char* mask_block_length(char* key, char* data, int length) {
     int i;
     for (i = 0; i < length; i++) {
         mask_byte(current->byte, data[i], result + i);
-        current->next;
+        current = current->next;
     }
     return result;
 }
