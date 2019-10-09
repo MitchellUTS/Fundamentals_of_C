@@ -148,13 +148,13 @@ int getNoOfRecords()
 
 
 
-void deleteRecord()
+void deleteRecord(item_node_t* node)
 {
   int ID;
-  int var;
+  char var[1000];
   int count=0;
   
-  FILE *ptr2 = fopen("c:\\database1.h","a");
+  FILE *ptr2 = fopen("c:\\database1.txt","a");
   int records = getNoOfRecords();
   refresh();
   fflush(stdin);
@@ -163,7 +163,7 @@ void deleteRecord()
   while(count!=records)
   {
     fread(&var,sizeof(item_t),1,ptr);
-    if(var.ID==ID)
+    if(ID = ((item_t*) (node->item_data))->ID)
     {
     }
     else
@@ -173,8 +173,8 @@ void deleteRecord()
     count++;
   }
   fcloseall();
-  remove("c:\\database.h");
-  rename("c:\\database1.h","c:\\database.h");
+  remove("c:\\database.txt");
+  rename("c:\\database1.txt","c:\\database.txt");
   printf("Press any key to continue..");
   getch();
 }
