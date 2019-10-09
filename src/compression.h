@@ -35,7 +35,6 @@ struct huffman_node {
 typedef struct huffman_node huffman_node_t;
 
 void count_frequencies(byte* data, ubig_t len, ubig_t* frequencies);
-void init_frequencies(ubig_t* frequencies);
 void sort_frequencies(byte* sort_order, ubig_t* frequencies);
 
 huffman_tree_node_t* build_huffman_tree(ubig_t* frequencies);
