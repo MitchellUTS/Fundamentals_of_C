@@ -22,7 +22,7 @@
 void save_database (item_node_t* item_list) {
 	FILE* file_stream;
 	char format_string[] = "%003d %l %s %s %s %s\n";
-	int id, count = 100;
+	int id;
 	long isbn;
 	char title[256], author[256], type[256], category[256];
 	item_node_t* head = item_list;
