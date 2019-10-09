@@ -22,7 +22,7 @@
 void save_database (item_node_t* item_list) {
 	FILE* file_stream;
 	char format_string[] = "%003d %l %s %s %s %s\n";
-	int id, count = 100, i = 0;
+	int id, count = 100;
 	long isbn;
 	char title[256], author[256], type[256], category[256];
 	item_node_t* head = item_list;
@@ -41,10 +41,10 @@ void save_database (item_node_t* item_list) {
     	/*Assumption: Rewrites whole file rather than append*/
     	id = ((item_t*) (item_list->item_data))->ID;
     	isbn = ((item_t*) (item_list->item_data))->ISBN;
-    	title = ((item_t*) (item_list->item_data))->title;
-    	author = ((item_t*) (item_list->item_data))->author;
-    	type = ((item_t*) (item_list->item_data))->type;
-    	category = ((item_t*) (item_list->item_data))->category;
+    	strcpy(((item_t*) (item_list->item_data))->title, title);
+    	strcpy(((item_t*) (item_list->item_data))->author, author);
+    	strcpy(((item_t*) (item_list->item_data))->type, type);
+    	strcpy(((item_t*) (item_list->item_data))->category, category);
     	
     	fprintf(file_stream, format_string, 
     			&id, &isbn, title, author, type, category);
@@ -85,8 +85,6 @@ void load_database (item_node_t* item_list) {
     /*for (c = getc(file_stream); c != EOF; c = getc(file_stream)) {
 		if (c == '\n') count++; 
     }*/
-
-    int 
 
     /* Keep reading records from the file until an invalid line is read
         or memory has been filled*/
