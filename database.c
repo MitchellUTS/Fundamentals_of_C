@@ -126,26 +126,14 @@ void add_record (FILE* file_ptr, item_node_t* node, int id, long isbn,
 			&id, &isbn, title, author, type, category);
 }
 
-int getNoOfRecords()
-{
-    int i;
-  int recordcount=0;
-  for (i=0; i<sizeof(struct item);i++)
-  {
-        if (item[i]== NULL)
-     {
-      return 0;
-
-     }
-        else
-     {
-      recordcount++;
-     }
-    
-  }
-  return recordcount;
-}
-
+/*******************************************************************************
+ * This function sorts the linked lists based on desired variable.
+ * inputs:
+ * - item_node_t** start: This is the pointer to the address of the head node 
+ *              for the linked list containing the data of items.
+ * outputs:
+ * - none
+*******************************************************************************/
 
 
 void deleteRecord(item_node_t* node)
@@ -154,7 +142,7 @@ void deleteRecord(item_node_t* node)
   int var;
   int count=0, records = 0;
   
-  FILE *ptr2 = fopen("c:\\database1.h","a");
+  FILE *ptr2 = fopen("c:\\database1.txt","a");
 
   for (c = getc(file_stream); c != EOF; c = getc(file_stream)) {
 	if (c == '\n') records++;
