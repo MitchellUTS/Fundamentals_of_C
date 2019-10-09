@@ -151,11 +151,15 @@ int getNoOfRecords()
 void deleteRecord(item_node_t* node)
 {
   int ID;
-  char var[1000];
-  int count=0;
+  int var;
+  int count=0, records = 0;
   
-  FILE *ptr2 = fopen("c:\\database1.txt","a");
-  int records = getNoOfRecords();
+  FILE *ptr2 = fopen("c:\\database1.h","a");
+
+  for (c = getc(file_stream); c != EOF; c = getc(file_stream)) {
+	if (c == '\n') records++;
+  }
+
   refresh();
   fflush(stdin);
   printf("Enter BookID:\n");
