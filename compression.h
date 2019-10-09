@@ -14,29 +14,44 @@
 #include <stdlib.h>
 #include <math.h>
 
+#define false 0
+#define true  1
+
 typedef unsigned int my_uint_t;
 typedef unsigned long long ubig_t;
+typedef unsigned char byte;
 
-struct huffman_code {
-    my_uint_t length;
-    my_uint_t code;
+struct huffman_tree_node {
+    struct huffman_tree_node *left, *right, *parent;
+    int code;
+    ubig_t frequency;
 };
-typedef struct huffman_code huffman_code_t;
+typedef struct huffman_tree_node huffman_tree_node_t;
 
 struct huffman_node {
-    struct huffman_node* left;
-    struct huffman_node* right;
-    huffman_code_t code;
-    ubig_t frequency;
+    struct huffman_node* next;
+    struct huffman_tree_node* node;
 };
 typedef struct huffman_node huffman_node_t;
 
-void count_frequencies(char* string, ubig_t strlen, ubig_t* frequencies);
+void count_frequencies(byte* data, ubig_t len, ubig_t* frequencies);
 void init_frequencies(ubig_t* frequencies);
+void sort_frequencies(byte* sort_order, ubig_t* frequencies);
 
-huffman_code_t huffman_code_create(char* code);
-huffman_node_t huffman_node_create(char* code);
+huffman_tree_node_t* build_huffman_tree(ubig_t* frequencies);
+huffman_tree_node_t huffman_tree_node_create(ubig_t frequency, int code, huffman_tree_node_t* left, huffman_tree_node_t* right, huffman_tree_node_t* parent);
 my_uint_t code_to_binary(char* string, my_uint_t size);
+huffman_node_t* squash_tree(huffman_node_t* head);
+
+void traverse_tree_recursive(huffman_tree_node_t* root, char* code, unsigned short length, char* code_array);
+void traverse_tree(huffman_tree_node_t* root, char* code_array);
+
+void huffman_list(huffman_node_t** head, huffman_tree_node_t* node);
+huffman_node_t* huffman_node_add(huffman_node_t* position, huffman_tree_node_t* node);
+huffman_node_t* huffman_node_delete_next(huffman_node_t* position);
+void print_node_list(huffman_node_t* start);
+
+huffman_node_t* add_prority_node(huffman_node_t* head, huffman_tree_node_t* node);
 
 void testByteShift();
 
@@ -47,7 +62,7 @@ void print_byte_as_bits(char val) {
     }
 }
 
-void print_bits(char * ty, char * val, unsigned char * bytes, size_t num_bytes) {
+void print_bits(char * ty, char * val, byte * bytes, size_t num_bytes) {
     printf("(%s) %s = [ ", ty, val);
 
     int i;
@@ -58,4 +73,4 @@ void print_bits(char * ty, char * val, unsigned char * bytes, size_t num_bytes) 
     printf("]\n");
 }
 
-#define SHOW(T,V) do { T x = V; print_bits(#T, #V, (unsigned char*) &x, sizeof(x)); } while(0)
+#define SHOW(T,V) do { T x = V; print_bits(#T, #V, (byte*) &x, sizeof(x)); } while(0)
