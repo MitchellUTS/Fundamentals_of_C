@@ -34,6 +34,12 @@ int main(void)
     ((item_t*)(item_list->item_data))->category = "IT";
     */
 
+   mask_file("input.txt", "output.txt", "passphrase");
+   mask_file("output.txt", "input.txt", "passphrase");
+
+   compress_file("input_compression.txt", "test_compression.cmp");
+   decompress_file("test_compression.cmp", "out_compression.txt");
+
     /* Continue the program until the user types '5' to exit */
     do {
         

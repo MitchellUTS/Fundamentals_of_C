@@ -11,9 +11,9 @@
 #include "core.h"
 /*#include "compression.h"*/
 
-#define SetBit(block, byte, bit) ( block[byte] |= (1 << bit) )
+/*#define SetBit(block, byte, bit) ( block[byte] |= (1 << bit) )
 #define ClearBit(block, byte, bit) ( block[byte] &= ~(1 << bit) )
-#define CheckBit(block, byte, bit) ( block[byte] & (1 << bit) )
+#define CheckBit(block, byte, bit) ( block[byte] & (1 << bit) )*/
 
 /*
 void SetBit(char* block, my_uint_t byte, my_uint_t bit) {
@@ -71,14 +71,11 @@ void decompress_data(FILE* in, FILE* out) {
                 bit_position = 0;
             }
         }
-        if ((ftell(in) == length && extra_bits == 8 - bit_position)) {
-            break;
-        }
         fputc(current->code, out);
     }
 }
 
-void compress_data(/*huffman_tree_node_t* root,*/ FILE* out, char* code_array, byte* data, ubig_t length) {
+void compress_data(FILE* out, char* code_array, byte* data, ubig_t length) {
     short bit_position = 8;
     byte buffer = 0;
     int i, j;
@@ -105,6 +102,7 @@ void compress_data(/*huffman_tree_node_t* root,*/ FILE* out, char* code_array, b
     fputc(buffer, out);
     /*printf("%c", buffer);*/
     byte extra_bits = (byte) bit_position;
+    
     fseek(out, 0, SEEK_SET);
     if (extra_bits == 8) {
         extra_bits = 0;
@@ -168,6 +166,48 @@ void compress_data(/*huffman_tree_node_t* root,*/ FILE* out, char* code_array, b
     return 0;
 }*/
 
+void compress_file(char* input_name, char* output_name) {
+    ubig_t frequencies[256];
+    init_frequencies(frequencies);
+
+    FILE* in = fopen(input_name, "rb");
+    FILE* out = fopen(output_name, "wb");
+
+    fseek(in, 0, SEEK_END);
+    ubig_t length = ftell(in);
+    fseek(in, 0, SEEK_SET);
+
+    byte* data = malloc(length);
+    if (data == NULL) {
+        printf("Interal buffer could not be allocated.\n");
+        return;
+    }
+    fread(data, 1, length, in);
+    fclose(in);
+
+    count_frequencies(data, length, frequencies);
+
+    huffman_tree_node_t* root = build_huffman_tree(frequencies);
+
+    char* code_array = (char*) calloc(11 * 256, sizeof(char));
+    traverse_tree(root, code_array);
+
+    write_headers(out, frequencies);
+    compress_data(out, code_array, data, length);
+
+    fclose(out);
+}
+
+void decompress_file(char* input_name, char* output_name) {
+    FILE* in = fopen(input_name, "rb");
+    FILE* out = fopen(output_name, "wb");
+
+    decompress_data(in, out);
+
+    fclose(in);
+    fclose(out);
+}
+
 int testBitField(my_uint_t block_size) {
     byte* block = (byte*) calloc(block_size, 1);
 
@@ -183,7 +223,7 @@ int testBitField(my_uint_t block_size) {
     int byte, bit;
     for (byte = 0; byte < block_size; byte++) {
         for (bit = 0; bit < 8; bit++) {
-            SetBit(block, byte, bit);
+            /*SetBit(block, byte, bit);*/
         }
     }
 

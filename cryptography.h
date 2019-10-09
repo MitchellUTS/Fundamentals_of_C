@@ -17,6 +17,7 @@ typedef struct byte_node byte_node_t;
 
 char* mask_block_length(char* key, char* data, int length);
 char* mask_block(char* key, char* data);
+void mask_file(char* input_name, char* output_name, char* key);
 
 char mask_byte(char key, char data, char* result);
 

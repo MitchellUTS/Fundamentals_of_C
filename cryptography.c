@@ -85,6 +85,45 @@
     /*return 0;
 }*/
 
+void mask_file(char* input_name, char* output_name, char* key) {
+    
+    FILE* input_file_stream;
+    /* Open data file the file for reading data */ 
+    input_file_stream = fopen(input_name, "rb");
+
+    FILE* output_file_stream;
+    /* Open data file the file for writing data */ 
+    output_file_stream = fopen(output_name, "wb");
+
+    if (input_file_stream == NULL || output_file_stream == NULL) {
+        printf("Fail to open files for encryption.\n");
+        return;
+    }
+
+    fseek(input_file_stream, 0, SEEK_END);
+    long file_size = ftell(input_file_stream);
+    rewind(input_file_stream);
+
+    char* buffer;
+    buffer = (char*) malloc(file_size);
+    if (buffer == NULL) {
+        printf("Fail to allocate memory for encryption.\n");
+        return;
+    }
+    
+    fread(buffer, 1, file_size, input_file_stream);
+
+    char* result1 = mask_block_length(key, buffer, file_size);
+
+    fwrite(result1, 1, file_size, output_file_stream);
+    
+    free(result1);
+    free(buffer);
+
+    fclose(input_file_stream);
+    fclose(output_file_stream);
+}
+
 void test_byte_stream(char* text) {
     byte_node_t head;
     byte_node_t* current = &head;
