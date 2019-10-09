@@ -21,9 +21,11 @@
  * outputs:
  * - None  
 *******************************************************************************/
-void select_filter (int items_size)
+void select_filter (void)
 {
   int filter_selection;  /* Choice of filter user has selected */
+  /* Call function to get number of records within database */
+  int items_size = getNoOfRecords(); 
 
   /* Continue the program until user types '7' to exit */
   do
@@ -47,7 +49,7 @@ void select_filter (int items_size)
 	  filter_int_items (items_size);
 	  break;
 	case 2:
-
+	  filter_long_items (items_size);
 	  break;
 	case 3:
 
