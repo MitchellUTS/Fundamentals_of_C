@@ -25,7 +25,9 @@ void select_filter (void)
 {
   int filter_selection;  /* Choice of filter user has selected */
   /* Call function to get number of records within database */
-  int items_size = getNoOfRecords(); 
+  int items_size = getNoOfRecords();
+  /* Which case we are searching through for character data types */
+  int char_search_case; 
 
   /* Continue the program until user types '7' to exit */
   do
@@ -46,25 +48,30 @@ void select_filter (void)
       switch(filter_selection)
 	{
 	case 1:
+	  /* Book ID's */
 	  filter_int_items (items_size);
 	  break;
 	case 2:
+	  /* Book ISBN's */
 	  filter_long_items (items_size);
 	  break;
 	case 3:
-
+	  /* Book Titles */
+	  filter_char_items (items_size, char_search_case = 1);
 	  break;
 	case 4:
-
+	  /* Book Authors */
+	  filter_char_items (items_size, char_search_case = 2);
 	  break;
 	case 5:
-
+	  /* Book Types */
+	  filter_char_items (items_size, char_search_case = 3);
 	  break;
 	case 6:
-
+	  /* Book Categories */
+	  filter_char_items (items_size, char_search_case = 4);
 	  break;
 	}
-
       
     } while (filter_selection != 7);
   return;
@@ -218,7 +225,7 @@ void filter_long_items (int items_size)
  * outputs:
  * - None  
 *******************************************************************************/
-void filter_char_items (int items_size)
+void filter_char_items (int items_size, int char_search_case)
 {
   /* Input search term */
   char search_input[256];
