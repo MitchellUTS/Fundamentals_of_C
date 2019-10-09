@@ -134,7 +134,7 @@ int getNoOfRecords()
   {
         if (item[i]== NULL)
      {
-      return;
+      return 0;
 
      }
         else
