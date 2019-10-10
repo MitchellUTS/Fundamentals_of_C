@@ -23,48 +23,67 @@
 *******************************************************************************/
 void select_filter (void)
 {
-  int filter_selection;  /* Choice of filter user has selected */
+  /* Choice of filter user has selected */
+  int filter_selection; 
   /* Call function to get number of records within database */
-  int items_size = getNoOfRecords(); 
+  /* int items_size = getNoOfRecords(); */
+  /* Placeholder value of 1 for testing */
+  int items_size = 1;
+  /* Which case we are searching through for character data types */
+  int char_search_case;
+  /* Buffer array for checking input */
+  char input_buffer[256];
 
   /* Continue the program until user types '7' to exit */
   do
     {
       /* Request a selection from user from filter selection menu */
       print_filter_menu();
-      scanf("%d", &filter_selection);
+      /* Checking if input is of integer data type */
+      fgets(input_buffer, 256, stdin);
+      if (sscanf(input_buffer, "%d", &filter_selection) == 1 )
+	;  /* Do nothing (no operation) */
+       /* scanf("%d", &filter_selection); */
 
       /* Force user to re-input selection until valid */
       while (filter_selection < 1 || filter_selection > 7)
 	{
 	  printf("Invalid choice\n");
-	  printf_filter_menu();
-	  scanf("%d", &filter_selection);
+	  print_filter_menu();
+	  /* Check input data type again */
+	  fgets(input_buffer, 256, stdin);
+	  if (sscanf(input_buffer, "%d", &filter_selection) == 1 )
+	    break;
 	}
 
       /* Select which item to filter through, based on user input */
       switch(filter_selection)
 	{
 	case 1:
+	  /* Book ID's */
 	  filter_int_items (items_size);
 	  break;
 	case 2:
+	  /* Book ISBN's */
 	  filter_long_items (items_size);
 	  break;
 	case 3:
-
+	  /* Book Titles */
+	  filter_char_items (items_size, char_search_case = 1);
 	  break;
 	case 4:
-
+	  /* Book Authors */
+	  filter_char_items (items_size, char_search_case = 2);
 	  break;
 	case 5:
-
+	  /* Book Types */
+	  filter_char_items (items_size, char_search_case = 3);
 	  break;
 	case 6:
-
+	  /* Book Categories */
+	  filter_char_items (items_size, char_search_case = 4);
 	  break;
 	}
-
       
     } while (filter_selection != 7);
   return;
@@ -83,11 +102,17 @@ void filter_int_items (int items_size)
 {
   /* Input search term */
   int search_input;
+  /* Buffer array for checking input */
+  char input_buffer[256];
 
   /* -1 not a valid book ID, so we will use this number to display all items*/
   printf("Enter '-1' without quotes to display all items, or\n"
 	 "Enter search term>\n");
-  scanf("%d", &search_input);
+  
+  /* Checking if input is of integer data type */
+  fgets(input_buffer, 256, stdin);
+  if (sscanf(input_buffer, "%d", &search_input) == 1)
+    ; /* No operation */
 
   /* Allow user to re-input search term until it is valid */
   while (search_input < -1 || search_input > 32767 || search_input == 0)
@@ -95,48 +120,22 @@ void filter_int_items (int items_size)
       printf("Invalid search term\n");
       printf("Enter '-1' without quotes to display all items, or\n"
 	      "Enter search term>\n");
-      scanf("%d", &search_input);
+      /* Check input data type again */
+      fgets(input_buffer, 256, stdin);
+      if (sscanf(input_buffer, "%d", &search_input) == 1)
+      break;
     }
 
-  /* If '-1' is input, call function display_all_items */
-  /* Also, if items_size == 0 (i.e. no items in database),
-  /* Call function display_all_items */
   if (search_input == -1 || items_size == 0)
     {
-      display_all_items (items_size);
-    }
-
-  else {
-    /* Checking if there are no matches between search term */
-    /* and with structure item_t's variables */
-
-    /* Placeholder (*.arrival_city, flight*) below! */
-    if ((strcmp(search_input, flight1.arrival_city) != 0) &&
-	(strcmp(search_input, flight2.arrival_city) != 0) &&
-	(strcmp(search_input, flight3.arrival_city) != 0) &&
-	(strcmp(search_input, flight4.arrival_city) != 0) &&
-	(strcmp(search_input, flight5.arrival_city) != 0)) {
-      printf("No flights\n");
-    }
-    /* Comparing search term with items in database */
-    /* If strcmp returns a '0', call display_item function */
-   if (strcmp(search_input, flight1.arrival_city) == 0) {
-     display_flight (flight1);
-   }
-   if (strcmp(search_input, flight2.arrival_city) == 0) {
-     display_flight (flight2);
-   }
-   if (strcmp(search_input, flight3.arrival_city) == 0) {
-     display_flight (flight3);
-   }
-   if (strcmp(search_input, flight4.arrival_city) == 0) {
-     display_flight (flight4);
-   }
-   if (strcmp(search_input, flight5.arrival_city) == 0) {
-     display_flight (flight5);
-   }
+      printf("Displaying all items\n");
   }
 
+  else
+    {
+      printf("Searching for '%d' under Book 'IDs'\n", search_input);
+    }
+    
   return;
 }
 
@@ -154,9 +153,14 @@ void filter_long_items (int items_size)
 {
   /* Input search term */
   long search_input;
+  /* Buffer for checking input value */
+  char input_buffer[256];
   
   printf("Enter search term>\n");
-  scanf("%li", search_input);
+  /* Check if input is of valid data type (integer/long) */
+  fgets(input_buffer, 256, stdin);
+  if (sscanf(input_buffer, "%li", &search_input) == 1)
+    ; /* No operation */
 
   /* Allow user to re-input search term until it is valid */
   while (search_input < -1 || search_input > 2147483647 || search_input == 0)
@@ -164,46 +168,23 @@ void filter_long_items (int items_size)
       printf("Invalid search term\n");
       printf("Enter '-1' without quotes to display all items, or\n"
 	      "Enter search term>\n");
-      scanf("%li", &search_input);
+      /* Check data type again */
+      fgets(input_buffer, 256, stdin);
+      if (sscanf(input_buffer, "%li", &search_input) == 1)
+      break;
     }
 
   /* If '-1' is input, call function display_all_items */
   /* Also, if items_size == 0 (i.e. no items in database),
-  /* Call function display_all_items */
+  Call function display_all_items */
   if (search_input == -1 || items_size == 0) {
-    display_all_items (items_size);
+    printf("Displaying all items\n");
   }
 
-  else {
-    /* Checking if there are no matches between search term */
-    /* and with structure item_t's variables */
-
-    /* Placeholder (*.arrival_city, flight*) below! */
-    if ((strcmp(search_input, flight1.arrival_city) != 0) &&
-	(strcmp(search_input, flight2.arrival_city) != 0) &&
-	(strcmp(search_input, flight3.arrival_city) != 0) &&
-	(strcmp(search_input, flight4.arrival_city) != 0) &&
-	(strcmp(search_input, flight5.arrival_city) != 0)) {
-      printf("No flights\n");
+  else
+    {
+      printf("Searching for '%li' under Book 'ISBNs'\n", search_input);
     }
-    /* Comparing search term with items in database */
-    /* If strcmp returns a '0', call display_tiem function */
-   if (strcmp(search_input, flight1.arrival_city) == 0) {
-     display_flight (flight1);
-   }
-   if (strcmp(search_input, flight2.arrival_city) == 0) {
-     display_flight (flight2);
-   }
-   if (strcmp(search_input, flight3.arrival_city) == 0) {
-     display_flight (flight3);
-   }
-   if (strcmp(search_input, flight4.arrival_city) == 0) {
-     display_flight (flight4);
-   }
-   if (strcmp(search_input, flight5.arrival_city) == 0) {
-     display_flight (flight5);
-   }
-  }
 
   return;
 }
@@ -214,55 +195,52 @@ void filter_long_items (int items_size)
  * inputs:
  * - item_t* items: An array of size MAX_NUM_items containing all item entries
  * - int items_size: The number of items currently in the array item_t* items
- * - 
+ * - int char_search_case: An integer corresponding to each string-type...
+ * ...member of items_t array
  * outputs:
  * - None  
 *******************************************************************************/
-void filter_char_items (int items_size)
+void filter_char_items (int items_size, int char_search_case)
 {
   /* Input search term */
   char search_input[256];
+  char str1[256];
+
+  strcpy(str1, "****");
   
   printf("Enter search term>\n");
   scanf("%s", search_input);
 
   /* If '****' is input, call function display_all_items */
   /* Also, if items_size == 0 (i.e. no items in database),
-  /* Call function display_all_items */
-  if (search_input[0] == '****' || items_size == 0) {
-    display_all_items (items_size);
+  Call function display_all_items */
+  if (strcmp(search_input, str1) == 0 || items_size == 0) {
+    printf("Displaying all items\n");
   }
 
-  else {
-    /* Checking if there are no matches between search term */
-    /* and with structure item_t's variables */
-
-    /* Placeholder (*.arrival_city, flight*) below! */
-    if ((strcmp(search_input, flight1.arrival_city) != 0) &&
-	(strcmp(search_input, flight2.arrival_city) != 0) &&
-	(strcmp(search_input, flight3.arrival_city) != 0) &&
-	(strcmp(search_input, flight4.arrival_city) != 0) &&
-	(strcmp(search_input, flight5.arrival_city) != 0)) {
-      printf("No flights\n");
+  else if (char_search_case == 1)
+    {
+    printf("Searching for '%s' under Book 'Titles'\n", search_input);
     }
-    /* Comparing search term with items in database */
-    /* If strcmp returns a '0', call display_tiem function */
-   if (strcmp(search_input, flight1.arrival_city) == 0) {
-     display_flight (flight1);
-   }
-   if (strcmp(search_input, flight2.arrival_city) == 0) {
-     display_flight (flight2);
-   }
-   if (strcmp(search_input, flight3.arrival_city) == 0) {
-     display_flight (flight3);
-   }
-   if (strcmp(search_input, flight4.arrival_city) == 0) {
-     display_flight (flight4);
-   }
-   if (strcmp(search_input, flight5.arrival_city) == 0) {
-     display_flight (flight5);
-   }
-  }
+  else if (char_search_case == 2)
+    {
+    printf("Searching for '%s' under 'Author'\n", search_input);
+    }
+  else if (char_search_case == 3)
+    {
+    printf("Searching for '%s' under Book 'Type'\n", search_input);
+    }
+  else if (char_search_case == 4)
+    {
+    printf("Searching for '%s' under Book 'Category'\n", search_input);
+    }
+  else
+    {
+    printf("Error!\n"
+    "Please contact the software vendor with the following:\n"
+	   "char_search_case = %d\n", char_search_case);
+    }
+
 
   return;
 }
