@@ -22,7 +22,7 @@
 void save_database (item_node_t* item_list) {
 	FILE* file_stream;
 	char format_string[] = "%003d %l %s %s %s %s\n";
-	int id, count = 100, i = 0;
+	int id;
 	long isbn;
 	char title[256], author[256], type[256], category[256];
 	item_node_t* head = item_list;
@@ -41,10 +41,10 @@ void save_database (item_node_t* item_list) {
     	/*Assumption: Rewrites whole file rather than append*/
     	id = ((item_t*) (item_list->item_data))->ID;
     	isbn = ((item_t*) (item_list->item_data))->ISBN;
-    	title = ((item_t*) (item_list->item_data))->title;
-    	author = ((item_t*) (item_list->item_data))->author;
-    	type = ((item_t*) (item_list->item_data))->type;
-    	category = ((item_t*) (item_list->item_data))->category;
+    	strcpy(((item_t*) (item_list->item_data))->title, title);
+    	strcpy(((item_t*) (item_list->item_data))->author, author);
+    	strcpy(((item_t*) (item_list->item_data))->type, type);
+    	strcpy(((item_t*) (item_list->item_data))->category, category);
     	
     	fprintf(file_stream, format_string, 
     			&id, &isbn, title, author, type, category);
@@ -86,8 +86,6 @@ void load_database (item_node_t* item_list) {
 		if (c == '\n') count++; 
     }*/
 
-    int 
-
     /* Keep reading records from the file until an invalid line is read
         or memory has been filled*/
     
@@ -103,52 +101,72 @@ void load_database (item_node_t* item_list) {
     fclose(file_stream);
 }
 
-void getNoOfRecords()
-{
-  int recordcount=0;
-  for (i=0; i<sizeof(struct item),i++)
-  {
-    if (item[i]== NULL)
-    {
-      return;
+/*******************************************************************************
+ * This function saves all items in memory to the database file as plain text.
+ * inputs:
+ * - item_t* items: This is an array of size MAX_NUM_itemS which will be
+ *                      saved to the database. 
+ * - int items_size: This is the number of items currently in the array.
+ * outputs:
+ * - none
+*******************************************************************************/
+void add_record (FILE* file_ptr, item_node_t* node, int id, long isbn, 
+				 char title[], char author[], char type[], char chategory[]) {
 
-    }
-    else{
-      recordcount++;
-    }
-    
-  }
-  return recordcount;
+	char format_string[] = "%003d %l %s %s %s %s\n";
+    	
+	id = ((item_t*) (node->item_data))->ID;
+	isbn = ((item_t*) (node->item_data))->ISBN;
+	strcpy(((item_t*) (node->item_data))->title, title);
+	strcpy(((item_t*) (node->item_data))->author, author);
+	strcpy(((item_t*) (node->item_data))->type, type);
+	strcpy(((item_t*) (node->item_data))->category, category);
+	
+	fprintf(file_ptr, format_string, 
+			&id, &isbn, title, author, type, category);
 }
 
+/*******************************************************************************
+ * This function sorts the linked lists based on desired variable.
+ * inputs:
+ * - item_node_t** start: This is the pointer to the address of the head node 
+ *              for the linked list containing the data of items.
+ * outputs:
+ * - none
+*******************************************************************************/
 
 
-void deleteRecord()
+void deleteRecord(item_node_t* node)
 {
   int ID;
-  int count=0;
+  int var;
+  int count=0, records = 0;
   
-  FILE *ptr2 = fopen("c:\\database1.h","a");
-  int records = getNoOfRecords();
+  FILE *ptr2 = fopen("c:\\database1.txt","a");
+
+  for (c = getc(file_stream); c != EOF; c = getc(file_stream)) {
+	if (c == '\n') records++;
+  }
+
   refresh();
   fflush(stdin);
   printf("Enter BookID:\n");
   scanf("%d",&ID);
   while(count!=records)
   {
-    fread(&var,sizeof(struct item),1,ptr);
-    if(var.ID==ID)
+    fread(&var,sizeof(item_t),1,ptr);
+    if(ID = ((item_t*) (node->item_data))->ID)
     {
     }
     else
     {
-      fwrite(&var,sizeof(struct item),1,ptr2);
+      fwrite(&var,sizeof(item_t),1,ptr2);
     }
     count++;
   }
   fcloseall();
-  remove("c:\\database.h");
-  rename("c:\\database1.h","c:\\database.h");
+  remove("c:\\database.txt");
+  rename("c:\\database1.txt","c:\\database.txt");
   printf("Press any key to continue..");
   getch();
 }
