@@ -15,7 +15,8 @@ struct item_node {
 };
 typedef struct item_node item_node_t;
 
-
+void display_database(item_node_t* node);
+void display_item(item_node_t* node);
 void save_database(item_node_t* item_list);
 void load_database(item_node_t* item_list);
 void write_record (FILE* file_ptr, item_node_t* node);
