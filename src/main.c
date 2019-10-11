@@ -97,6 +97,9 @@ int main(int argc, char** argv)
 			    sort_num = sort_option();
 				/*merge_sort(&list);*/
 				break;
+            case 7: 
+				/*display_database(&list);*/
+				break;
         }
 
     } while (user_selection != 0);
@@ -119,7 +122,8 @@ void print_main_menu (void)
     "3. Compress a File\n"
     "4. Decompress a File\n"
     /*"5. Add an Item\n"
-	"6. Sort Database\n"*/
+	"6. Sort Database\n"
+	"7. Display Database\n"*/
     "0. Exit the Program\n"
     "Enter your choice (number between 0-6)>\n");
 }

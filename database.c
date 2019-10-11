@@ -19,6 +19,48 @@
  * outputs:
  * - none
 *******************************************************************************/
+void display_database(item_node_t* node){
+	if (node == NULL) printf("No database loaded");
+	else {
+		while (node != NULL) 
+		  { 
+			 display_item(node);
+			 node = node->next; 
+		  } 
+	}
+}
+
+/*******************************************************************************
+ * This function saves all items in memory to the database file as plain text.
+ * inputs:
+ * - item_t* items: This is an array of size MAX_NUM_itemS which will be
+ *                      saved to the database. 
+ * - int items_size: This is the number of items currently in the array.
+ * outputs:
+ * - none
+*******************************************************************************/
+void display_item(item_node_t* node)
+{
+    char format_string[] = "%003d %l %s %s %s %s\n";
+
+    printf(format_string, 
+    		((item_t*)(current->item_data))->ID, 
+			((item_t*)(current->item_data))->ISBN,
+			((item_t*)(current->item_data))->title, 
+			((item_t*)(current->item_data))->author, 
+			((item_t*)(current->item_data))->type, 
+			((item_t*)(current->item_data))->category);
+}
+
+/*******************************************************************************
+ * This function saves all items in memory to the database file as plain text.
+ * inputs:
+ * - item_t* items: This is an array of size MAX_NUM_itemS which will be
+ *                      saved to the database. 
+ * - int items_size: This is the number of items currently in the array.
+ * outputs:
+ * - none
+*******************************************************************************/
 void save_database (item_node_t* item_list) {
 	FILE* file_stream;
 	item_node_t* head = item_list;
