@@ -50,9 +50,9 @@ void create_item(item_node_t* node, item_node_t* head) {
 	new_node->next = NULL; 
 	
 	 /* Make new node as head if linked list is empty */
-	if (*head_ref == NULL) 
+	if (*head == NULL) 
 	{ 
-	   *head_ref = new_node; 
+	   *head = new_node; 
 	   return; 
 	}  
 	

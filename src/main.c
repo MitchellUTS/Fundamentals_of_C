@@ -98,7 +98,13 @@ int main(int argc, char** argv)
 				/*merge_sort(&list);*/
 				break;
             case 7: 
-				/*display_database(&list);*/
+				/*display_database(&head);*/
+				break;
+            case 8: 
+				/*save_database(&list);*/
+				break;
+            case 9: 
+				/*load_database(&list, &head);*/
 				break;
         }
 
@@ -123,9 +129,11 @@ void print_main_menu (void)
     "4. Decompress a File\n"
     /*"5. Add an Item\n"
 	"6. Sort Database\n"
-	"7. Display Database\n"*/
+	"7. Display Database\n"
+	"8. Save Database\n"
+	"9. Load Database\n"*/
     "0. Exit the Program\n"
-    "Enter your choice (number between 0-6)>\n");
+    "Enter your choice (number between 0-4)>\n");
 }
 
 /*******************************************************************************
