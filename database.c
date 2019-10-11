@@ -21,14 +21,10 @@
 *******************************************************************************/
 void save_database (item_node_t* item_list) {
 	FILE* file_stream;
-	char format_string[] = "%003d %l %s %s %s %s\n";
-	int id;
-	long isbn;
-	char title[256], author[256], type[256], category[256];
 	item_node_t* head = item_list;
 
     /* Open/Create the file for writing text data */ 
-    file_stream = fopen("input.txt", "w");
+    file_stream = fopen("database.txt", "w");
 
     /* Check if opening the file was successful */
     if (file_stream == NULL)
@@ -39,15 +35,7 @@ void save_database (item_node_t* item_list) {
     while (item_list->next != NULL) {
     	
     	/*Assumption: Rewrites whole file rather than append*/
-    	id = ((item_t*) (item_list->item_data))->ID;
-    	isbn = ((item_t*) (item_list->item_data))->ISBN;
-    	strcpy(((item_t*) (item_list->item_data))->title, title);
-    	strcpy(((item_t*) (item_list->item_data))->author, author);
-    	strcpy(((item_t*) (item_list->item_data))->type, type);
-    	strcpy(((item_t*) (item_list->item_data))->category, category);
-    	
-    	fprintf(file_stream, format_string, 
-    			&id, &isbn, title, author, type, category);
+    	write_record (file_stream, item_list);
     	
     	item_list = item_list->next;
 	}
@@ -74,17 +62,13 @@ void load_database (item_node_t* item_list) {
     char title[256], author[256], type[256], category[256];
 
     /* Open the file for reading text data */
-    file_stream = fopen("output.txt", "r");
+    file_stream = fopen("database.txt", "r");
 
     /* Check if opening the file was successful */
     if (file_stream == NULL) {
         printf("Read error\n");
     	return;
     }
-    
-    /*for (c = getc(file_stream); c != EOF; c = getc(file_stream)) {
-		if (c == '\n') count++; 
-    }*/
 
     /* Keep reading records from the file until an invalid line is read
         or memory has been filled*/
@@ -92,10 +76,7 @@ void load_database (item_node_t* item_list) {
     while (fscanf(file_stream, format_string, &id, 
 		&isbn, title, author, type, category) == 6 && i < count) {
 		i++; 
-    }
-
-    /* Update the number of items currently in use as part of the array */
-    /* *items_size = i; TO DELETE COMMENT: where are we saving that value?*/   
+    } 
     
     /* Always close the file once you are no longer using it */
     fclose(file_stream);
@@ -110,17 +91,19 @@ void load_database (item_node_t* item_list) {
  * outputs:
  * - none
 *******************************************************************************/
-void add_record (FILE* file_ptr, item_node_t* node, int id, long isbn, 
-				 char title[], char author[], char type[], char chategory[]) {
+void write_record (FILE* file_ptr, item_node_t* node) {
 
+	int id;
+	long isbn;
+	char title[256], author[256], type[256], category[256];
 	char format_string[] = "%003d %l %s %s %s %s\n";
     	
 	id = ((item_t*) (node->item_data))->ID;
 	isbn = ((item_t*) (node->item_data))->ISBN;
-	strcpy(((item_t*) (node->item_data))->title, title);
-	strcpy(((item_t*) (node->item_data))->author, author);
-	strcpy(((item_t*) (node->item_data))->type, type);
-	strcpy(((item_t*) (node->item_data))->category, category);
+	strcpy(title, ((item_t*) (node->item_data))->title);
+	strcpy(author, ((item_t*) (node->item_data))->author);
+	strcpy(type, ((item_t*) (node->item_data))->type);
+	strcpy(category, ((item_t*) (node->item_data))->category);
 	
 	fprintf(file_ptr, format_string, 
 			&id, &isbn, title, author, type, category);
@@ -248,7 +231,7 @@ void split_lists(item_node_t* head, item_node_t** front, item_node_t** back)
     first_list = head; 
     second_list = head->next; 
   
-    /* Position nodes to evenly split lists */
+    /* Position node pointers to evenly split lists */
     while (second_list != NULL) { 
         second_list = second_list->next; 
         if (second_list != NULL) { 

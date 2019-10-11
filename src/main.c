@@ -89,11 +89,14 @@ int main(int argc, char** argv)
 
                 break;
             case 5:
-                /*add_item(&item_list);*/ /*I'm assuming create_item() from item.h?*/
+                /* item_t* new_item = (item_t*) malloc(sizeof(item_t));
+                item_node_t* new_node = (item_node_t*) malloc(sizeof(item_node_t));
+                new_node->item_data = new_item;
+                create_item(node, list);*/ 
                 break;
             case 6: 
 			    sort_num = sort_option();
-				/*merge_sort(&item_list);*/
+				/*merge_sort(&list);*/
 				break;
         }
 
