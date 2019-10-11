@@ -41,7 +41,7 @@ void create_item(item_node_t* node, item_node_t* head) {
 	item_node_t* new_node = (item_node_t*) malloc(sizeof(item_node_t));
 	new_node->item_data = new_item;
   
-	item_node_t* last = *head_ref; 
+	item_node_t* last = *head; 
 
 	printf("Enter Title:\n");
 	add_string(node, 1);
