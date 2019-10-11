@@ -23,7 +23,9 @@ int main(int argc, char** argv)
 
     /*item_node_t item_list;
     item_node_t* list = NULL;
-    list = (item_node_t*) malloc(sizeof(item_node_t)); Uncomment later*/
+    list = (item_node_t*) malloc(sizeof(item_node_t));
+    item_node_t* head = list;
+    Uncomment later*/
     
     /*NODE TEST
     ((item_t*)(item_list->item_data))->ID = 1;
@@ -89,10 +91,7 @@ int main(int argc, char** argv)
 
                 break;
             case 5:
-                /* item_t* new_item = (item_t*) malloc(sizeof(item_t));
-                item_node_t* new_node = (item_node_t*) malloc(sizeof(item_node_t));
-                new_node->item_data = new_item;
-                create_item(node, list);*/ 
+                /*create_item(list, head);*/ 
                 break;
             case 6: 
 			    sort_num = sort_option();
