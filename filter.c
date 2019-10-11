@@ -13,8 +13,8 @@
 
 /*******************************************************************************
  * This function displays filtered entries of the database, by first asking
- * for the filter type, then calling a function 'display_item'
- * to search through database entries and print them.
+ * for the filter type, then calling a function to search through database
+ * entries and print them.
  * inputs:
  * - item_node_t* node: The head node of the database's linked list of items
  * outputs:
@@ -43,7 +43,7 @@ void select_filter (item_node_t* node)
       print_filter_menu();
       /* Checking if input is of integer data type */
       fgets(input_buffer, 256, stdin);
-      if (sscanf(input_buffer, "%d", &filter_selection) == 1 )
+      if (sscanf(input_buffer, "%d", &filter_selection) == 1)
 	;  /* Do nothing (no operation) */
 
       /* Force user to re-input selection until valid */
@@ -53,7 +53,7 @@ void select_filter (item_node_t* node)
 	  print_filter_menu();
 	  /* Check input data type again */
 	  fgets(input_buffer, 256, stdin);
-	  if (sscanf(input_buffer, "%d", &filter_selection) == 1 )
+	  if (sscanf(input_buffer, "%d", &filter_selection) == 1)
 	    break;
 	}
       /* Select which item to filter through, based on user input */
@@ -141,7 +141,7 @@ void filter_int_items (item_node_t* node)
 	{
 	  /* Check if item ID for structure within current node... */
 	  /* ...is equal to search_input */
-	  if (((item_t*)(current->item_data))->ID == search_input)
+	  if (((item_t*)(node->item_data))->ID == search_input)
 	    {
 	      /* Call function to display items for current node */
 	      display_item(node);
@@ -212,7 +212,7 @@ void filter_long_items (item_node_t* node)
 	{
 	  /* Check if item ISBN for structure within current node... */
 	  /* ...is equal to search_input */
-	  if (((item_t*)(current->item_data))->ISBN == search_input)
+	  if (((item_t*)(node->item_data))->ISBN == search_input)
 	    {
 	      /* Call function to display items for current node */
 	      display_item(node);
@@ -274,7 +274,7 @@ void filter_char_items (int char_search_case, item_node_t* node)
     while (node != NULL)
 	{
 	  /* Check if substring of search term inside 'title' */
-	  *str_chkp = strstr(((item_t*)(current->item_data))->title,
+	  *str_chkp = strstr(((item_t*)(node->item_data))->title,
 			     search_input);
 	  /* strstr returns NULL if no substring found */
 	  if (str_chkp != NULL)
@@ -300,7 +300,7 @@ void filter_char_items (int char_search_case, item_node_t* node)
         while (node != NULL)
 	{
 	  /* Check if substring of search term inside 'author' */
-	  *str_chkp = strstr(((item_t*)(current->item_data))->author,
+	  *str_chkp = strstr(((item_t*)(node->item_data))->author,
 			     search_input);
 	  /* strstr returns NULL if no substring found */
 	  if (str_chkp != NULL)
@@ -326,7 +326,7 @@ void filter_char_items (int char_search_case, item_node_t* node)
         while (node != NULL)
 	{
 	  /* Check if substring of search term inside 'type' */
-	  *str_chkp = strstr(((item_t*)(current->item_data))->type,
+	  *str_chkp = strstr(((item_t*)(node->item_data))->type,
 			     search_input);
 	  /* strstr returns NULL if no substring found */
 	  if (str_chkp != NULL)
@@ -352,7 +352,7 @@ void filter_char_items (int char_search_case, item_node_t* node)
         while (node != NULL)
 	{
 	  /* Check if substring of search term inside 'category' */
-	  *str_chkp = strstr(((item_t*)(current->item_data))->category,
+	  *str_chkp = strstr(((item_t*)(node->item_data))->category,
 			     search_input);
 	  /* strstr returns NULL if no substring found */
 	  if (str_chkp != NULL)
