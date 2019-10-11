@@ -42,7 +42,7 @@ void display_database(item_node_t* head){
 *******************************************************************************/
 void display_item(item_node_t* node)
 {
-    char format_string[] = "%003d %l %s %s %s %s\n";
+    char format_string[] = "%03d %li %s %s %s %s\n";
 
     printf(format_string, 
     		((item_t*)(node->item_data))->ID, 
