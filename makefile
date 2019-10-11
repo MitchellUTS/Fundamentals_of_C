@@ -4,30 +4,36 @@ CFLAGS 	= -Wall -Werror -ansi -lm
 OBJ = $(wildcard src/*.c)
 
 EXEC_NAME = inventoryManager
+TARGET_NAME = $(EXEC_NAME).out
 
-ifeq ($(OS), Windows_NT)
-	DEL_CMD = del
+ all: $(OBJ)
+	$(CC) $(CFLAGS) -o $(TARGET_NAME) $(OBJ)
 
-	TARGET_NAME = $(EXEC_NAME).exe
-else
-	DEL_CMD = rm
+# ifeq ($(OS), Windows_NT)
+# 	DEL_CMD = del
 
-	UNAME = $(shell uname -s)
-	ifeq ($(UNAME), Linux)
-		TARGET_NAME = $(EXEC_NAME)
-	else ifeq ($(UNAME), Darwin)
-		TARGET_NAME = $(EXEC_NAME).app
-	endif
+# 	TARGET_NAME = $(EXEC_NAME).exe
+# else
+# 	DEL_CMD = rm
 
-endif
+# 	UNAME = $(shell uname -s)
+# 	ifeq ($(UNAME), Linux)
+# 		TARGET_NAME = $(EXEC_NAME)
+# 	else ifeq ($(UNAME), Darwin)
+# 		TARGET_NAME = $(EXEC_NAME).app
+# 	endif
 
-all: $(OBJ)
-	$(CC) $(CFLAGS) -o bin/$(TARGET_NAME) $(OBJ)
-	ECHO "The compiled result is found at bin/$(TARGET_NAME)"
+# endif
 
-.PHONY: clean
-clean:
-	$(DEL_CMD) bin/$(TARGET_NAME)
+# all: $(OBJ)
+# 	$(CC) $(CFLAGS) -o bin/$(TARGET_NAME) $(OBJ)
+# 	ECHO "The compiled result is found at bin/$(TARGET_NAME)"
+
+# .PHONY: clean
+# clean:
+# 	$(DEL_CMD) bin/$(TARGET_NAME)
+
+# OLD MAKE FILE
 
 # #makefile for producing main.out
 
