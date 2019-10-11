@@ -197,9 +197,7 @@ void filter_long_items (item_node_t* node)
     }
 
   /* If '-1' is input, call function display_all_items */
-  /* Also, if items_size == 0 (i.e. no items in database),
-  Call function display_all_items */
-  if (search_input == -1 || items_size == 0) {
+  if (search_input == -1) {
     printf("Displaying all items\n");
     /* Call display_database function */
     display_database (node);
@@ -259,9 +257,7 @@ void filter_char_items (int char_search_case, item_node_t* node)
   scanf("%s", search_input);
 
   /* If '****' is input, call function display_all_items */
-  /* Also, if items_size == 0 (i.e. no items in database),
-  Call function display_all_items */
-  if (strcmp(search_input, str1) == 0 || items_size == 0) {
+  if (strcmp(search_input, str1) == 0) {
     printf("Displaying all items\n");
     /* Call display_database function */
     display_database (node);
