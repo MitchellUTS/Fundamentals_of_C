@@ -18,6 +18,8 @@
 int main(int argc, char** argv)
 {
     int user_selection = 0, sort_num = -1;
+    /* Buffer array for checking input */
+    char input_buffer[256];
 
     if (!loginFunction()) {
         return 0;
@@ -45,13 +47,21 @@ int main(int argc, char** argv)
         
         /* Request a selection from the user */
         print_main_menu();
-        scanf("%d", &user_selection);
+	/* Ensuring that input is of integer data type */
+        fgets(input_buffer, 256, stdin);
+	/* scanf("%d", &user_selection); */
+        if (sscanf(input_buffer, "%d", &user_selection) == 1)
+	;  /* Do nothing (no operation) */
 
         /* Allow to user to re-input their selection until it is valid */
         while (user_selection < 0 || user_selection > 6) {
            	printf("Invalid choice\n");
             print_main_menu();
-            scanf("%d", &user_selection);
+            /* scanf("%d", &user_selection); */
+	    /* Ensuring again that input is of integer data type */
+            fgets(input_buffer, 256, stdin);
+            if (sscanf(input_buffer, "%d", &user_selection) == 1)
+	    ;  /* Do nothing (no operation) */
         }
 
         char source[256], destination[256], password[1024];
@@ -96,12 +106,22 @@ int main(int argc, char** argv)
                 /*create_item(list, head);*/ 
                 break;
             case 6: 
-			    sort_num = sort_option();
-				/*merge_sort(&list);*/
-				break;
-            case 7: 
-				/*display_database(&list);*/
-				break;
+		sort_num = sort_option();
+	       	/*merge_sort(&list);*/
+	       	break;
+	    case 7:
+	        /* Call function for filtering database */
+	        /* select_filter(&head);*/
+	        break;
+            case 8: 
+	      	/*display_database(&head);*/
+	       	break;
+            case 9: 
+	       	/*save_database(&list);*/
+	       	break;
+            case 10: 
+	       	/*load_database(&list, &head);*/
+	       	break;
         }
 
     } while (user_selection != 0);
@@ -109,7 +129,7 @@ int main(int argc, char** argv)
 }
 
 /*******************************************************************************
- * This function prints the initial menu with all instructions on how to use
+ * This function prints the initial menu with all options on how to use
  * this program.
  * inputs:
  * - none
@@ -125,32 +145,47 @@ void print_main_menu (void)
     "4. Decompress a File\n"
     /*"5. Add an Item\n"
 	"6. Sort Database\n"
-	"7. Display Database\n"*/
+    "7. Search through Database\n"
+	"8. Display Database\n"
+	"9. Save Database\n"
+	"10. Load Database\n"*/
     "0. Exit the Program\n"
-    "Enter your choice (number between 0-6)>\n");
+    "Enter your choice (number between 0-4)>\n");
 }
 
 /*******************************************************************************
- * This function prints the initial menu with all instructions on how to use
- * this program.
+ * This function obtains a sorting option from the user and calls a function
+ * to show available selections.
  * inputs:
  * - none
  * outputs:
- * - none
+ * - int user_selection: Integer corresponding to the sort option chosen
 *******************************************************************************/
 int sort_option(void) {
 	
 	int user_selection;
-	
+	/* Buffer array for checking input */
+        char input_buffer[256];
+
 	/* Request a selection from the user */
 	print_sorting_menu();
-	scanf("%d", &user_selection);
+	/* scanf("%d", &user_selection); */
+	
+	/* Checking if input is of integer data type */
+        fgets(input_buffer, 256, stdin);
+        if (sscanf(input_buffer, "%d", &user_selection) == 1)
+	;  /* Do nothing (no operation) */
 	        
 	/* Allow to user to re-input their selection until it is valid */
 	while (user_selection < 1 || user_selection > 5) {
 		printf("Only 1 available. Enter 1\n"); /*Temporary*/
 		print_sorting_menu();
-		scanf("%d", &user_selection);
+		/* scanf("%d", &user_selection); */
+		
+		/* Checking if input is of integer data type again */
+                fgets(input_buffer, 256, stdin);
+                if (sscanf(input_buffer, "%d", &user_selection) == 1)
+         	;  /* Do nothing (no operation) */
 	}	
 	
 	return user_selection;

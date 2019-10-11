@@ -13,8 +13,8 @@
 
 /*******************************************************************************
  * This function displays filtered entries of the database, by first asking
- * for the filter type, then calling a function 'display_item'
- * to search through database entries and print them.
+ * for the filter type, then calling a function to search through database
+ * entries and print them.
  * inputs:
  * - item_node_t* node: The head node of the database's linked list of items
  * outputs:
@@ -43,7 +43,7 @@ void select_filter (item_node_t* node)
       print_filter_menu();
       /* Checking if input is of integer data type */
       fgets(input_buffer, 256, stdin);
-      if (sscanf(input_buffer, "%d", &filter_selection) == 1 )
+      if (sscanf(input_buffer, "%d", &filter_selection) == 1)
 	;  /* Do nothing (no operation) */
 
       /* Force user to re-input selection until valid */
@@ -53,7 +53,7 @@ void select_filter (item_node_t* node)
 	  print_filter_menu();
 	  /* Check input data type again */
 	  fgets(input_buffer, 256, stdin);
-	  if (sscanf(input_buffer, "%d", &filter_selection) == 1 )
+	  if (sscanf(input_buffer, "%d", &filter_selection) == 1)
 	    break;
 	}
       /* Select which item to filter through, based on user input */
