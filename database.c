@@ -127,7 +127,7 @@ void add_record (FILE* file_ptr, item_node_t* node, int id, long isbn,
 }
 
 /*******************************************************************************
- * This function sorts the linked lists based on desired variable.
+ * This function deletes an entry based on the ID entred by the user.
  * inputs:
  * - item_node_t** start: This is the pointer to the address of the head node 
  *              for the linked list containing the data of items.
@@ -142,16 +142,16 @@ void deleteRecord(item_node_t* node)
   int var;
   int count=0, records = 0;
   
-  FILE *ptr2 = fopen("c:\\database1.txt","a");
+  FILE *ptr2 = fopen("c:\\database1.txt","a"); /* opening a new database file */
 
   for (c = getc(file_stream); c != EOF; c = getc(file_stream)) {
-	if (c == '\n') records++;
+	if (c == '\n') records++;  /*calculating the number of entries in the IMS by checking the spaces */
   }
 
   refresh();
   fflush(stdin);
   printf("Enter BookID:\n");
-  scanf("%d",&ID);
+  scanf("%d",&ID);   /* scanning the ID to be deleted by the user*/
   while(count!=records)
   {
     fread(&var,sizeof(item_t),1,ptr);
@@ -160,13 +160,13 @@ void deleteRecord(item_node_t* node)
     }
     else
     {
-      fwrite(&var,sizeof(item_t),1,ptr2);
+      fwrite(&var,sizeof(item_t),1,ptr2);  /* writing all the data aexcept the ID entered by the user*/
     }
     count++;
   }
   fcloseall();
   remove("c:\\database.txt");
-  rename("c:\\database1.txt","c:\\database.txt");
+  rename("c:\\database1.txt","c:\\database.txt"); /*renaming the database file to the original */
   printf("Press any key to continue..");
   getch();
 }
