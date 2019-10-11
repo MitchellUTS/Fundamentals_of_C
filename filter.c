@@ -141,7 +141,7 @@ void filter_int_items (item_node_t* node)
 	{
 	  /* Check if item ID for structure within current node... */
 	  /* ...is equal to search_input */
-	  if (((item_t*)(current->item_data))->ID == search_input)
+	  if (((item_t*)(node->item_data))->ID == search_input)
 	    {
 	      /* Call function to display items for current node */
 	      display_item(node);
@@ -212,7 +212,7 @@ void filter_long_items (item_node_t* node)
 	{
 	  /* Check if item ISBN for structure within current node... */
 	  /* ...is equal to search_input */
-	  if (((item_t*)(current->item_data))->ISBN == search_input)
+	  if (((item_t*)(node->item_data))->ISBN == search_input)
 	    {
 	      /* Call function to display items for current node */
 	      display_item(node);
@@ -274,7 +274,7 @@ void filter_char_items (int char_search_case, item_node_t* node)
     while (node != NULL)
 	{
 	  /* Check if substring of search term inside 'title' */
-	  *str_chkp = strstr(((item_t*)(current->item_data))->title,
+	  *str_chkp = strstr(((item_t*)(node->item_data))->title,
 			     search_input);
 	  /* strstr returns NULL if no substring found */
 	  if (str_chkp != NULL)
@@ -300,7 +300,7 @@ void filter_char_items (int char_search_case, item_node_t* node)
         while (node != NULL)
 	{
 	  /* Check if substring of search term inside 'author' */
-	  *str_chkp = strstr(((item_t*)(current->item_data))->author,
+	  *str_chkp = strstr(((item_t*)(node->item_data))->author,
 			     search_input);
 	  /* strstr returns NULL if no substring found */
 	  if (str_chkp != NULL)
@@ -326,7 +326,7 @@ void filter_char_items (int char_search_case, item_node_t* node)
         while (node != NULL)
 	{
 	  /* Check if substring of search term inside 'type' */
-	  *str_chkp = strstr(((item_t*)(current->item_data))->type,
+	  *str_chkp = strstr(((item_t*)(node->item_data))->type,
 			     search_input);
 	  /* strstr returns NULL if no substring found */
 	  if (str_chkp != NULL)
@@ -352,7 +352,7 @@ void filter_char_items (int char_search_case, item_node_t* node)
         while (node != NULL)
 	{
 	  /* Check if substring of search term inside 'category' */
-	  *str_chkp = strstr(((item_t*)(current->item_data))->category,
+	  *str_chkp = strstr(((item_t*)(node->item_data))->category,
 			     search_input);
 	  /* strstr returns NULL if no substring found */
 	  if (str_chkp != NULL)
