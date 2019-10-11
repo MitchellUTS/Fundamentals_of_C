@@ -19,6 +19,10 @@ int main(int argc, char** argv)
 {
     int user_selection = 0, sort_num = -1;
 
+    if (!loginFunction()) {
+        return 0;
+    }
+
     printf("%d\n", sort_num);
 
     /*item_node_t item_list;
@@ -87,8 +91,6 @@ int main(int argc, char** argv)
                 printf("Enter the location to save the decompressed file> ");
                 scanf("%255s", destination);
                 decompress_file(source, destination);
-                break;
-
                 break;
             case 5:
                 /*create_item(list, head);*/ 

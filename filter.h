@@ -11,7 +11,6 @@
 
 void select_filter (item_node_t* node);
 void print_filter_menu (void);
-void filter_int_items (int items_size, item_node_t* node);
-void filter_long_items (int items_size, item_node_t* node);
-void filter_char_items (int items_size, int char_search_case,
-			item_node_t* node);
+void filter_int_items (item_node_t* node);
+void filter_long_items (item_node_t* node);
+void filter_char_items (int char_search_case, item_node_t* node);
