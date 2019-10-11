@@ -23,7 +23,9 @@ int main(int argc, char** argv)
 
     /*item_node_t item_list;
     item_node_t* list = NULL;
-    list = (item_node_t*) malloc(sizeof(item_node_t)); Uncomment later*/
+    list = (item_node_t*) malloc(sizeof(item_node_t));
+    item_node_t* head = list;
+    Uncomment later*/
     
     /*NODE TEST
     ((item_t*)(item_list->item_data))->ID = 1;
@@ -89,11 +91,14 @@ int main(int argc, char** argv)
 
                 break;
             case 5:
-                /*add_item(&item_list);*/ /*I'm assuming create_item() from item.h?*/
+                /*create_item(list, head);*/ 
                 break;
             case 6: 
 			    sort_num = sort_option();
-				/*merge_sort(&item_list);*/
+				/*merge_sort(&list);*/
+				break;
+            case 7: 
+				/*display_database(&list);*/
 				break;
         }
 
@@ -117,7 +122,8 @@ void print_main_menu (void)
     "3. Compress a File\n"
     "4. Decompress a File\n"
     /*"5. Add an Item\n"
-	"6. Sort Database\n"*/
+	"6. Sort Database\n"
+	"7. Display Database\n"*/
     "0. Exit the Program\n"
     "Enter your choice (number between 0-6)>\n");
 }

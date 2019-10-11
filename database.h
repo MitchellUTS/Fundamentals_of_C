@@ -15,11 +15,11 @@ struct item_node {
 };
 typedef struct item_node item_node_t;
 
-
+void display_database(item_node_t* node);
+void display_item(item_node_t* node);
 void save_database(item_node_t* item_list);
 void load_database(item_node_t* item_list);
-void add_record(FILE* file_ptr, item_node_t* node, int id, long isbn, 
-		 	 	char title[], char author[], char type[], char chategory[]);
+void write_record (FILE* file_ptr, item_node_t* node);
 void merge_sort(item_node_t** start); 
 struct item_node_t* sort_items(item_node_t* a, item_node_t* b);
 void split_lists(item_node_t* head, 

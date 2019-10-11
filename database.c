@@ -19,16 +19,54 @@
  * outputs:
  * - none
 *******************************************************************************/
+void display_database(item_node_t* node){
+	if (node == NULL) printf("No database loaded");
+	else {
+		while (node != NULL) 
+		  { 
+			 display_item(node);
+			 node = node->next; 
+		  } 
+	}
+}
+
+/*******************************************************************************
+ * This function saves all items in memory to the database file as plain text.
+ * inputs:
+ * - item_t* items: This is an array of size MAX_NUM_itemS which will be
+ *                      saved to the database. 
+ * - int items_size: This is the number of items currently in the array.
+ * outputs:
+ * - none
+*******************************************************************************/
+void display_item(item_node_t* node)
+{
+    char format_string[] = "%003d %l %s %s %s %s\n";
+
+    printf(format_string, 
+    		((item_t*)(current->item_data))->ID, 
+			((item_t*)(current->item_data))->ISBN,
+			((item_t*)(current->item_data))->title, 
+			((item_t*)(current->item_data))->author, 
+			((item_t*)(current->item_data))->type, 
+			((item_t*)(current->item_data))->category);
+}
+
+/*******************************************************************************
+ * This function saves all items in memory to the database file as plain text.
+ * inputs:
+ * - item_t* items: This is an array of size MAX_NUM_itemS which will be
+ *                      saved to the database. 
+ * - int items_size: This is the number of items currently in the array.
+ * outputs:
+ * - none
+*******************************************************************************/
 void save_database (item_node_t* item_list) {
 	FILE* file_stream;
-	char format_string[] = "%003d %l %s %s %s %s\n";
-	int id;
-	long isbn;
-	char title[256], author[256], type[256], category[256];
 	item_node_t* head = item_list;
 
     /* Open/Create the file for writing text data */ 
-    file_stream = fopen("input.txt", "w");
+    file_stream = fopen("database.txt", "w");
 
     /* Check if opening the file was successful */
     if (file_stream == NULL)
@@ -39,15 +77,7 @@ void save_database (item_node_t* item_list) {
     while (item_list->next != NULL) {
     	
     	/*Assumption: Rewrites whole file rather than append*/
-    	id = ((item_t*) (item_list->item_data))->ID;
-    	isbn = ((item_t*) (item_list->item_data))->ISBN;
-    	strcpy(((item_t*) (item_list->item_data))->title, title);
-    	strcpy(((item_t*) (item_list->item_data))->author, author);
-    	strcpy(((item_t*) (item_list->item_data))->type, type);
-    	strcpy(((item_t*) (item_list->item_data))->category, category);
-    	
-    	fprintf(file_stream, format_string, 
-    			&id, &isbn, title, author, type, category);
+    	write_record (file_stream, item_list);
     	
     	item_list = item_list->next;
 	}
@@ -74,17 +104,13 @@ void load_database (item_node_t* item_list) {
     char title[256], author[256], type[256], category[256];
 
     /* Open the file for reading text data */
-    file_stream = fopen("output.txt", "r");
+    file_stream = fopen("database.txt", "r");
 
     /* Check if opening the file was successful */
     if (file_stream == NULL) {
         printf("Read error\n");
     	return;
     }
-    
-    /*for (c = getc(file_stream); c != EOF; c = getc(file_stream)) {
-		if (c == '\n') count++; 
-    }*/
 
     /* Keep reading records from the file until an invalid line is read
         or memory has been filled*/
@@ -92,10 +118,7 @@ void load_database (item_node_t* item_list) {
     while (fscanf(file_stream, format_string, &id, 
 		&isbn, title, author, type, category) == 6 && i < count) {
 		i++; 
-    }
-
-    /* Update the number of items currently in use as part of the array */
-    /* *items_size = i; TO DELETE COMMENT: where are we saving that value?*/   
+    } 
     
     /* Always close the file once you are no longer using it */
     fclose(file_stream);
@@ -110,24 +133,26 @@ void load_database (item_node_t* item_list) {
  * outputs:
  * - none
 *******************************************************************************/
-void add_record (FILE* file_ptr, item_node_t* node, int id, long isbn, 
-				 char title[], char author[], char type[], char chategory[]) {
+void write_record (FILE* file_ptr, item_node_t* node) {
 
+	int id;
+	long isbn;
+	char title[256], author[256], type[256], category[256];
 	char format_string[] = "%003d %l %s %s %s %s\n";
     	
 	id = ((item_t*) (node->item_data))->ID;
 	isbn = ((item_t*) (node->item_data))->ISBN;
-	strcpy(((item_t*) (node->item_data))->title, title);
-	strcpy(((item_t*) (node->item_data))->author, author);
-	strcpy(((item_t*) (node->item_data))->type, type);
-	strcpy(((item_t*) (node->item_data))->category, category);
+	strcpy(title, ((item_t*) (node->item_data))->title);
+	strcpy(author, ((item_t*) (node->item_data))->author);
+	strcpy(type, ((item_t*) (node->item_data))->type);
+	strcpy(category, ((item_t*) (node->item_data))->category);
 	
 	fprintf(file_ptr, format_string, 
 			&id, &isbn, title, author, type, category);
 }
 
 /*******************************************************************************
- * This function sorts the linked lists based on desired variable.
+ * This function deletes an entry based on the ID entred by the user.
  * inputs:
  * - item_node_t** start: This is the pointer to the address of the head node 
  *              for the linked list containing the data of items.
@@ -142,16 +167,16 @@ void deleteRecord(item_node_t* node)
   int var;
   int count=0, records = 0;
   
-  FILE *ptr2 = fopen("c:\\database1.txt","a");
+  FILE *ptr2 = fopen("c:\\database1.txt","a"); /* opening a new database file */
 
   for (c = getc(file_stream); c != EOF; c = getc(file_stream)) {
-	if (c == '\n') records++;
+	if (c == '\n') records++;  /*calculating the number of entries in the IMS by checking the spaces */
   }
 
   refresh();
   fflush(stdin);
   printf("Enter BookID:\n");
-  scanf("%d",&ID);
+  scanf("%d",&ID);   /* scanning the ID to be deleted by the user*/
   while(count!=records)
   {
     fread(&var,sizeof(item_t),1,ptr);
@@ -160,13 +185,13 @@ void deleteRecord(item_node_t* node)
     }
     else
     {
-      fwrite(&var,sizeof(item_t),1,ptr2);
+      fwrite(&var,sizeof(item_t),1,ptr2);  /* writing all the data aexcept the ID entered by the user*/
     }
     count++;
   }
   fcloseall();
   remove("c:\\database.txt");
-  rename("c:\\database1.txt","c:\\database.txt");
+  rename("c:\\database1.txt","c:\\database.txt"); /*renaming the database file to the original */
   printf("Press any key to continue..");
   getch();
 }
@@ -248,7 +273,7 @@ void split_lists(item_node_t* head, item_node_t** front, item_node_t** back)
     first_list = head; 
     second_list = head->next; 
   
-    /* Position nodes to evenly split lists */
+    /* Position node pointers to evenly split lists */
     while (second_list != NULL) { 
         second_list = second_list->next; 
         if (second_list != NULL) { 

@@ -20,6 +20,6 @@ struct item {
 };
 typedef struct item item_t;
 
-void print_item(item_t item);
-void create_item(item_t* item);
-int validate_item(item_t* item);
+void create_item(item_node_t* node, item_node_t* head);
+int new_id (item_node_t* head);
+void add_string (item_node_t* node, int i);
