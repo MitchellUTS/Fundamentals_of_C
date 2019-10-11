@@ -22,6 +22,10 @@
  *              function return true
  * outputs:
  * - int: this will be true or false
+
+
+ login function- Helps the system to be secure by asking the user for an username and a password.
+If they are correct the system can be used and the other fuctions which are available are visible. 
 *******************************************************************************/
 int between(int value, int min, int max) {
     return (value >= min && value <= max);
@@ -53,15 +57,17 @@ int loginFunction()
   /*printf("\n\nPress any key to continue");
   getchar();*/
  
+ /* add users with their passwords here*/
  if((!strcmp(username,"admin") && !strcmp(userpwd,"fundaC")) || 
   (!strcmp(username,"student") && !strcmp(userpwd,"fundaC")) || 
   (!strcmp(username,"lecturer") && !strcmp(userpwd,"fundaC")))
  {
-  printf("\nSuccessful Login\n");
-  return true;
- }else
+    printf("\nSuccessful Login\n");
+    return true;
+ }
+  else
  {
-  printf("\nIncorrect username or password\n");
-  return false;
+    printf("\nIncorrect username or password\n");
+    return false;
  }
 }
