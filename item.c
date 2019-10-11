@@ -18,12 +18,17 @@
  * outputs:
  * - none
 *******************************************************************************/
-void print_item(item_t item)
+void print_item(item_node_t* node)
 {
     char format_string[] = "%003d %l %s %s %s %s\n";
 
-    printf(format_string, item.ID, item.ISBN,
-        item.title, item.author, item.type, item.category);
+    printf(format_string, 
+    		((item_t*)(current->item_data))->ID, 
+			((item_t*)(current->item_data))->ISBN,
+			((item_t*)(current->item_data))->title, 
+			((item_t*)(current->item_data))->author, 
+			((item_t*)(current->item_data))->type, 
+			((item_t*)(current->item_data))->category);
 }
 
 void create_item(item_node_t* node, item_node_t* head) {
